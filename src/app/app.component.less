@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  flex-direction: row;
+
+  padding: 50px 100px;
+
+  &__title-block {
+    width: 260px;
+    text-align: right;
+
+    &_title {
+      font-size: 26pt;
+    }
+
+    &_tagline {
+      font-size: 9pt;
+      color: gray;
+      font-weight: bold;
+    }
+  }
+
+  &__menu-block {
+    @indent: 20px;
+
+    display: flex;
+    flex-direction: row;
+
+    width: auto;
+    border-left: 1px solid gray;
+    margin-left: @indent;
+    padding-left: @indent;
+    vertical-align: middle;
+
+    &_item {
+      padding: @indent;
+      font-size: 14pt;
+    }
+
+    &_item:hover {
+      background: #ff7c30;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
