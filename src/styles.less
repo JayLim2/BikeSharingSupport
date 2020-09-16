@@ -30,3 +30,26 @@ input {
   margin: @control-margin;
   padding: @control-padding;
 }
+
+/* Message */
+
+.message {
+  font-size: 11pt;
+  padding: 12px;
+  border-left: 4px solid;
+}
+
+.error {
+  .message;
+  border-color: darkred;
+}
+
+.warning {
+  .message;
+  border-left-color: #e59708;
+}
+
+.success {
+  .message;
+  border-left-color: green;
+}

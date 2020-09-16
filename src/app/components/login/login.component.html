@@ -3,6 +3,13 @@
     Вход в систему
   </div>
   <div class="container__login-form">
+    <ng-container *ngIf="authenticationResult">
+      <div class="message"
+           [ngClass]="authenticationResult.status"
+      >
+        {{authenticationResult.message}}
+      </div>
+    </ng-container>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <input type="text"
              formControlName="login"

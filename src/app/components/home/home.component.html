@@ -3,8 +3,14 @@
 </div>
 
 <div style="margin:50px;font-size: 14pt; color: gray; text-align: center">
-  Напишите нам, если у Вас возникли сложности при использовании
-  нашего сервиса.
+  <ng-container *ngIf="temp; else unauthorizedUser">
+    {{temp}}, напишите нам, если у Вас возникли сложности при использовании
+    нашего сервиса.
+  </ng-container>
+  <ng-template #unauthorizedUser>
+    Напишите нам, если у Вас возникли сложности при использовании
+    нашего сервиса.
+  </ng-template>
 </div>
 
 <div style="text-align: center">
