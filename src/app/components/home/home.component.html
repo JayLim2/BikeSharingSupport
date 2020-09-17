@@ -3,8 +3,8 @@
 </div>
 
 <div style="margin:50px;font-size: 14pt; color: gray; text-align: center">
-  <ng-container *ngIf="temp; else unauthorizedUser">
-    {{temp}}, напишите нам, если у Вас возникли сложности при использовании
+  <ng-container *ngIf="userMessage; else unauthorizedUser">
+    {{userMessage}}, напишите нам, если у Вас возникли сложности при использовании
     нашего сервиса.
   </ng-container>
   <ng-template #unauthorizedUser>
@@ -14,7 +14,9 @@
 </div>
 
 <div style="text-align: center">
-  <button class="big-orange-button">
+  <button class="big-orange-button"
+          routerLink="tickets/create"
+  >
     Написать нам
   </button>
 </div>

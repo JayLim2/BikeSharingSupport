@@ -11,19 +11,25 @@
   <div class="header__menu-block">
     <div class="header__menu-block_item"
          routerLink=""
-    >
-      Главная
-    </div>
+    >Главная</div>
     <div class="header__menu-block_item"
          routerLink="help"
-    >
-      Вопросы и ответы
-    </div>
-    <div class="header__menu-block_item"
-         routerLink="login"
-    >
-      Мои обращения
-    </div>
+    >Вопросы и ответы</div>
+
+    <ng-container *ngIf="session; else unauthorizedUserMenu">
+      <div class="header__menu-block_item"
+           routerLink="profile"
+      >Мои обращения
+      </div>
+      <div class="header__menu-block_item"
+           routerLink="logout"
+      >Выйти</div>
+    </ng-container>
+    <ng-template #unauthorizedUserMenu>
+      <div class="header__menu-block_item"
+           routerLink="login"
+      >Войти</div>
+    </ng-template>
   </div>
 </div>
 

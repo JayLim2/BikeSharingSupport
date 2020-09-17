@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../../../services/authentication.service";
+import {AuthenticationService, Session} from "../../../services/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -8,18 +9,18 @@ import {AuthenticationService} from "../../../services/authentication.service";
 })
 export class HomeComponent implements OnInit {
 
-  temp: string
+  userMessage: string
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    const login = sessionStorage.getItem("login");
+    const role = sessionStorage.getItem("role");
 
-    const session = this.authenticationService.session;
-    console.log(session);
-
-    this.temp = `${session.login} (${session.role})`;
+    this.userMessage = login && role ? `${login}` : null;
   }
 
 }

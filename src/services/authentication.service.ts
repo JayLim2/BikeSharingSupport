@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {Validators} from "../utils/Validators";
 import {RestService} from "./rest.service";
@@ -13,7 +13,7 @@ export class Session {
 })
 export class AuthenticationService {
 
-  private _session: Session;
+  private sessionFields: Array<string> = ["login", "role"];
 
   constructor(
     private restService: RestService
@@ -34,12 +34,21 @@ export class AuthenticationService {
     )
   }
 
-
-  get session(): Session {
-    return this._session;
+  public getCurrentSession(): Session {
+    let session = null;
+    for (const sessionParam of this.sessionFields) {
+      const item = sessionStorage.getItem(sessionParam);
+      if (!session && item) {
+        session = {};
+      }
+      session[sessionParam] = item;
+    }
+    return session ? session : null;
   }
 
-  set session(value: Session) {
-    this._session = value;
+  public resetSession(): void {
+    for (const sessionParam of this.sessionFields) {
+      sessionStorage.removeItem(sessionParam);
+    }
   }
 }

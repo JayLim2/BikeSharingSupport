@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit {
           break;
       }
       if(data.authenticated) {
-        this.authenticationService.session = data.session;
+        sessionStorage.setItem("login", data.session.login);
+        sessionStorage.setItem("role", data.session.role);
         this.router.navigateByUrl("/");
       }
     }, (error) => {
