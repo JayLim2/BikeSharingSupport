@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {AuthenticationService, Session} from "../../../services/authentication.service";
-import {Router} from "@angular/router";
+import {FormControl, FormGroup} from '@angular/forms';
+import {AuthenticationService, Session} from '../../../services/authentication.service';
+import {Router} from '@angular/router';
 
 interface AuthenticationResult {
-  status: string,
-  message: string
+  status: string;
+  message: string;
 }
 
 @Component({
@@ -21,41 +21,41 @@ export class LoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      login: new FormControl(""),
-      password: new FormControl("")
+      login: new FormControl(''),
+      password: new FormControl('')
     });
   }
 
   onLogin(): void {
     const credentials = this.loginForm.value;
     const response = this.authenticationService.authenticate(credentials.login, credentials.password);
-    response.subscribe((data: {message: string, authenticated: boolean, session: Session}) => {
+    response.subscribe((data: { message: string, authenticated: boolean, session: Session }) => {
       switch (data.message) {
-        case "OK":
+        case 'OK':
           this.authenticationResult = {
-            message: "Вы вошли.",
-            status: "success"
+            message: 'Вы вошли.',
+            status: 'success'
           };
           break;
-        case "NOT_FOUND":
+        case 'NOT_FOUND':
           this.authenticationResult = {
-            message: "Проверьте логин и пароль.",
-            status: "error"
+            message: 'Проверьте логин и пароль.',
+            status: 'error'
           };
           break;
       }
-      if(data.authenticated) {
-        sessionStorage.setItem("login", data.session.login);
-        sessionStorage.setItem("role", data.session.role);
-        this.router.navigateByUrl("/");
+      if (data.authenticated) {
+        this.authenticationService.setSession(data.session);
+        this.router.navigateByUrl('');
       }
     }, (error) => {
-      console.error("Error: ", error);
-    })
+      console.error('Error: ', error);
+    });
   }
 
 }

@@ -1,26 +1,25 @@
-import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AuthenticationService, Session} from "../../../services/authentication.service";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.less']
 })
-export class LogoutComponent {
-
-  @Output()
-  private onUpdate: EventEmitter<any> = new EventEmitter<any>();
+export class LogoutComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ) {
-    const session: Session = this.authenticationService.getCurrentSession();
-    if (session) {
+  }
+
+  ngOnInit() {
+    if (sessionStorage.length > 0) {
       this.authenticationService.resetSession();
     }
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl('');
   }
 
 }

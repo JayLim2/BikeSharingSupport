@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {Validators} from "../utils/Validators";
-import {RestService} from "./rest.service";
+import {Observable} from 'rxjs';
+import {Validators} from '../utils/Validators';
+import {RestService} from './rest.service';
 
 export class Session {
   login: string;
-  role: string
+  role: string;
 }
 
 @Injectable({
@@ -13,11 +13,12 @@ export class Session {
 })
 export class AuthenticationService {
 
-  private sessionFields: Array<string> = ["login", "role"];
+  public session: Session;
 
   constructor(
     private restService: RestService
-  ) { }
+  ) {
+  }
 
   public authenticate(login: string, password: string): Observable<any> {
     const validationResult = Validators.validateCredentials(login, password);
@@ -26,29 +27,25 @@ export class AuthenticationService {
     }
 
     return this.restService.post(
-      "login",
+      'login',
       {
         username: login,
-        password: password
+        password
       }
-    )
+    );
   }
 
-  public getCurrentSession(): Session {
-    let session = null;
-    for (const sessionParam of this.sessionFields) {
-      const item = sessionStorage.getItem(sessionParam);
-      if (!session && item) {
-        session = {};
+  public setSession(session: Session): void {
+    if (session) {
+      for (const sessionParam of Object.keys(session)) {
+        sessionStorage.setItem(sessionParam, session[sessionParam]);
       }
-      session[sessionParam] = item;
     }
-    return session ? session : null;
+    this.session = session;
   }
 
   public resetSession(): void {
-    for (const sessionParam of this.sessionFields) {
-      sessionStorage.removeItem(sessionParam);
-    }
+    sessionStorage.clear();
+    this.session = null;
   }
 }
