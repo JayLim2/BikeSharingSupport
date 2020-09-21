@@ -16,7 +16,7 @@
          routerLink="help"
     >Вопросы и ответы</div>
 
-    <ng-container *ngIf="this.authenticationService.session; else unauthorizedUserMenu">
+    <ng-container *ngIf="this.authenticationService.isAuthenticated(); else unauthorizedUserMenu">
       <div class="header__menu-block_item"
            routerLink="profile"
       >Мои обращения

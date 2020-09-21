@@ -13,7 +13,7 @@ export class Session {
 })
 export class AuthenticationService {
 
-  public session: Session;
+  private session: Session;
 
   constructor(
     private restService: RestService
@@ -47,5 +47,9 @@ export class AuthenticationService {
   public resetSession(): void {
     sessionStorage.clear();
     this.session = null;
+  }
+
+  public isAuthenticated(): boolean {
+    return this.session !== undefined && this.session !== null;
   }
 }
