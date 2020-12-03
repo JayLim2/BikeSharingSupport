@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Validators} from '../utils/Validators';
-import {RestService} from './rest.service';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient} from "@angular/common/http";
+import {NotificationService} from "./notification.service";
+import {map} from "rxjs/operators";
+import {environment} from "../environments/environment";
 
 export class Session {
   login: string;
@@ -13,43 +15,48 @@ export class Session {
 })
 export class AuthenticationService {
 
-  private session: Session;
+  private currentUserSubject: BehaviorSubject<any>;
+  public currentUserObservable: Observable<any>;
+  public currentUser: any;
+
+  public errorMessage: string = null;
 
   constructor(
-    private restService: RestService
+    private http: HttpClient,
+    private ns: NotificationService
   ) {
-  }
-
-  public authenticate(login: string, password: string): Observable<any> {
-    const validationResult = Validators.validateCredentials(login, password);
-    if (validationResult) {
-      throw new Error(validationResult);
-    }
-
-    return this.restService.post(
-      'login',
-      {
-        username: login,
-        password
-      }
+    this.currentUserSubject = new BehaviorSubject<any>(
+      JSON.parse(localStorage.getItem('currentUser'))
     );
+    this.currentUserObservable = this.currentUserSubject.asObservable();
   }
 
-  public setSession(session: Session): void {
-    if (session) {
-      for (const sessionParam of Object.keys(session)) {
-        sessionStorage.setItem(sessionParam, session[sessionParam]);
+  public get currentUserValue(): any {
+    return this.currentUserSubject.value;
+  }
+
+  login(login: string, password: string) {
+    let token = window.btoa(login + ':' + password);
+    localStorage.setItem('token', token);
+    return this.http.get<any>(
+      `${environment.routes.api}/users/get/login/${login}`
+    ).pipe(map((user) => {
+      if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        this.ns.clear();
+      } else {
+        localStorage.removeItem('token');
+        this.ns.error("Неверно введен номер телефона или пароль.", 10);
       }
-    }
-    this.session = session;
+    }));
   }
 
-  public resetSession(): void {
-    sessionStorage.clear();
-    this.session = null;
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
-  public isAuthenticated(): boolean {
-    return this.session !== undefined && this.session !== null;
-  }
 }

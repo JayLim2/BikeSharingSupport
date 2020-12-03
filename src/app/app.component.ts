@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
+import {User} from "./models/user.model";
+import {HealthCheckerService} from "../services/health-checker.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,9 +11,22 @@ import {AuthenticationService} from "../services/authentication.service";
 })
 export class AppComponent {
 
+  currentUser: User;
+
   constructor(
-    public authenticationService: AuthenticationService
+    public healthChecker: HealthCheckerService,
+    public authenticationService: AuthenticationService,
+    private router: Router
   ) {
+  }
+
+  ngOnInit() {
+    this.healthChecker.checkHealth();
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigateByUrl('login');
   }
 
 }

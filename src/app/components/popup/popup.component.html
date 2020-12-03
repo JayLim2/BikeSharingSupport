@@ -1,0 +1,95 @@
+<!-- form window -->
+<ng-template #formContent let-modal>
+  <form [formGroup]="formGroup"
+        (ngSubmit)="onSubmit.emit()"
+  >
+    <div class="modal-header">
+      <h4 class="modal-title">{{popupTitle}}</h4>
+      <button type="button"
+              class="close"
+              aria-label="Close"
+              (click)="close(modal, 'reject')"
+      >&times;</button>
+    </div>
+    <div class="modal-body">
+      <ng-container [ngTemplateOutlet]="contentProjection"></ng-container>
+    </div>
+    <div class="modal-footer">
+      <!-- form window -->
+      <button type="submit"
+              class="btn btn-primary"
+              (click)="close(modal, 'submit')"
+      >Сохранить</button>
+      <button type="button"
+              class="btn btn-dark"
+              (click)="close(modal, 'reject')"
+      >Закрыть</button>
+    </div>
+  </form>
+</ng-template>
+
+<!-- info, confirm windows -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title"
+        id="modal-basic-title"
+    >{{popupTitle}}</h4>
+    <button type="button"
+            class="close"
+            aria-label="Close"
+            (click)="close(modal, 'reject')"
+    >&times;</button>
+  </div>
+  <div class="modal-body">
+    <ng-container [ngTemplateOutlet]="contentProjection"></ng-container>
+  </div>
+  <div class="modal-footer">
+    <!-- custom buttons -->
+    <ng-container *ngFor="let customButton of customButtons">
+      <button class="btn btn-primary"
+              (click)="customButton.onClick(customButton.onClickParams)"
+      >{{customButton.title}}</button>
+    </ng-container>
+    <!-------------------->
+
+    <ng-container [ngSwitch]="type">
+      <!-- info window -->
+      <ng-container *ngSwitchCase="'info'">
+        <button type="button" class="btn btn-dark"
+                (click)="close(modal, 'reject')"
+        >Закрыть
+        </button>
+      </ng-container>
+      <!-- confirm window -->
+      <ng-container *ngSwitchCase="'confirm'">
+        <button type="button" class="btn btn-danger"
+                (click)="close(modal, 'approve')"
+        >Хорошо
+        </button>
+        <button type="button" class="btn btn-primary"
+                (click)="close(modal, 'reject')"
+        >Передумал
+        </button>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #contentProjection>
+  <ng-content></ng-content>
+</ng-template>
+
+<ng-container [ngSwitch]="type">
+  <ng-container *ngSwitchCase="'form'">
+    <button class="button medium"
+            [ngClass]="styles"
+            (click)="open(formContent)"
+    >{{buttonTitle}}</button>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <button class="button medium"
+            [ngClass]="styles"
+            (click)="open(content)"
+    >{{buttonTitle}}</button>
+  </ng-container>
+</ng-container>

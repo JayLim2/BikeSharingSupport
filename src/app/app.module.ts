@@ -13,7 +13,8 @@ import { TicketsComponent } from './components/tickets/tickets.component';
 import { TicketPageComponent } from './components/ticket-page/ticket-page.component';
 import { HelpComponent } from './components/help/help.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { LogoutComponent } from './components/logout/logout.component';
+import {NotificationComponent} from "./components/notification/notification.component";
+import {PopupComponent} from "./components/popup/popup.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     TicketPageComponent,
     HelpComponent,
     ProfileComponent,
-    LogoutComponent
+    NotificationComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

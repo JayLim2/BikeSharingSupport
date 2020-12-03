@@ -7,18 +7,17 @@ import {TicketsComponent} from "./components/tickets/tickets.component";
 import {TicketPageComponent} from "./components/ticket-page/ticket-page.component";
 import {HelpComponent} from "./components/help/help.component";
 import {ProfileComponent} from "./components/profile/profile.component";
-import {LogoutComponent} from "./components/logout/logout.component";
+import {AuthGuard} from "./helpers/auth.guard";
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'logout', component: LogoutComponent},
-  {path: 'tickets', component: TicketsComponent},
-  {path: 'tickets/view/:ticketId', component: TicketPageComponent},
-  {path: 'tickets/create', component: CreateTicketFormComponent},
+  {path: 'tickets', component: TicketsComponent, canActivate: [AuthGuard]},
+  {path: 'tickets/view/:ticketId', component: TicketPageComponent, canActivate: [AuthGuard]},
+  {path: 'tickets/create', component: CreateTicketFormComponent, canActivate: [AuthGuard]},
   {path: 'help', component: HelpComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

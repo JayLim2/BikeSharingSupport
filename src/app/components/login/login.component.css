@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin: 20px auto;
+  padding: 10px 20px;
+}
+.container__title {
+  font-size: 22pt;
+  margin-bottom: 10px;
+}
+.container__login-form {
+  font-size: 14pt;
+}
+.container__login-form form {
+  display: flex;
+  flex-direction: column;
+}
+.container__login-form form button {
+  width: 150px;
+}
+/*# sourceMappingURL=login.component.css.map */

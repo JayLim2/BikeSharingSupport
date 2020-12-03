@@ -1,37 +1,174 @@
-/* You can add global styles to this file, and also import other style files */
+/* Main colors */
 
-* {
-  font-family: Arial, serif;
-}
+@main-color-1: #ff5e00;
+@main-color-2: #000000;
 
 /* Controls indents */
 @control-padding: 5px;
 @control-margin: 5px 0;
 
+* {
+  font-family: Arial, serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Logo */
+
+.logo {
+  &_blue {
+    color: @main-color-1;
+  }
+
+  &_red {
+    color: @main-color-2;
+  }
+}
+
+/* Links */
+
+a {
+  &:link, &:visited {
+    color: @main-color-1;
+  }
+
+  &:hover {
+    color: @main-color-2;
+  }
+}
+
 /* Buttons */
-button {
-  background: #006ecb;
-  font-size: 16pt;
+
+@original-font-size: 12pt;
+
+.button {
+  background: @main-color-1;
   color: white;
   border: 0;
   border-radius: 4px;
   margin: @control-margin;
   padding: @control-padding + 5px;
-}
 
-button:hover {
-  background: #002f5d;
-  cursor: pointer;
+  &.available-width {
+    width: 100% !important;
+  }
+
+  &:hover {
+    background: #ff7c30;
+    cursor: pointer;
+  }
+
+  &.outline {
+    background: white;
+    color: @main-color-1;
+    border: 1px solid @main-color-1;
+
+    &:hover {
+      @darken-color: darken(@main-color-1, 15%);
+      border-color: @darken-color;
+      color: @darken-color;
+    }
+  }
+
+  &.reject-button {
+    background: @main-color-2;
+
+    &:hover {
+      background: darken(@main-color-2, 25%);
+    }
+  }
+
+  &.small {
+    font-size: @original-font-size;
+  }
+
+  &.medium {
+    font-size: @original-font-size + 2pt;
+  }
+
+  &.large {
+    font-size: @original-font-size + 4pt;
+  }
 }
 
 /* Inputs */
-input {
+
+@input-control-width: 400px;
+
+.input-control {
+  border: 2px solid @main-color-2;
   font-size: 14pt;
-  margin: @control-margin;
-  padding: @control-padding;
+  border-radius: 4px;
+  margin: 10px 0;
+  padding: 12px;
+  width: @input-control-width;
+
+  &:hover {
+    background: lighten(@main-color-1, 37%);
+    cursor: pointer;
+  }
 }
 
-/* Message */
+input, select {
+  .input-control !important;
+  height: 50px !important;
+}
+
+input[type="datetime-local"] {
+  width: @input-control-width - 28px;
+}
+
+.form-field {
+  display: flex;
+  width: 70%;
+  margin-top: 20px;
+  align-items: center;
+
+  &__label {
+    display: flex;
+
+    &_required {
+
+      &:after {
+        color: red;
+        content: ' *';
+      }
+    }
+  }
+
+  &__control-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__hint {
+    .info;
+
+    &:before {
+      font-weight: bold;
+      color: @main-color-1;
+      content: 'Подсказка.';
+    }
+  }
+
+  .info {
+    font-size: 10.5pt;
+    color: #4c4c4c;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid @main-color-1;
+  }
+}
+
+/* Messages */
 
 .message {
   font-size: 11pt;
@@ -54,17 +191,160 @@ input {
   border-left-color: green;
 }
 
+.info {
+  .message;
+  border-left-color: #0065b1;
+}
+
 /* Pages */
 
 .page {
-  margin: 20px 150px;
+  display: flex;
+  flex-direction: column;
 
-  &__header {
-    font-size: 19pt;
+  margin: 20px 150px;
+  padding: 10px 20px;
+
+  &__title {
+    font-size: 22pt;
+    margin-bottom: 10px;
   }
 
-  &__body {
+  &__content {
     font-size: 14pt;
-    padding-top: 25px;
+  }
+}
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+}
+
+.tab {
+  width: max-content;
+  font-size: 14pt;
+  padding: 12px 25px;
+  margin: 0 2px 25px 0;
+  border-bottom: 6px solid @main-color-1;
+
+  &:hover, &.selected {
+    cursor: pointer;
+    border-bottom: 6px solid @main-color-2 !important;
+  }
+}
+
+/* Support Ticket Statuses */
+
+.support-ticket-status {
+  width: max-content;
+  font-weight: bold;
+  font-size: 9pt;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  color: white;
+  text-transform: uppercase;
+
+  &.opened {
+    background: #003965;
+
+    &:after {
+      content: "Ищем оператора";
+    }
+  }
+
+  &.in-progress {
+    background: green;
+
+    &:after {
+      content: "Уже изучаем"
+    }
+  }
+
+  &.canceled {
+    background: #9f0e23;
+
+    &:after {
+      content: "Отклонено";
+    }
+  }
+
+  &.on-hold {
+    background: chocolate;
+
+    &:after {
+      content: "Приостановлено";
+    }
+  }
+
+  &.closed {
+    background: blueviolet;
+
+    &:after {
+      content: "Вопрос решен";
+    }
+  }
+}
+
+/* Blocks */
+
+.list {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    margin-top: 25px;
+    width: 70%;
+    border: 1px solid @main-color-1;
+    border-radius: 4px;
+    padding: 25px 25px 15px 25px;
+
+    &.in-popup {
+      width: 100%;
+      border: 0;
+      margin: 0;
+      padding: 10px;
+    }
+
+    &__header {
+      color: @main-color-1;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    &__content {
+      display: flex;
+
+      .data {
+        width: calc(100% - 170px);
+      }
+
+      .controls {
+        width: 150px;
+      }
+    }
+  }
+}
+
+.loader {
+  width: 120px;
+  height: 120px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  margin-left: 30px;
+  //margin-right: 30px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -1,0 +1,30 @@
+.notifications {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 25px;
+  right: 25px;
+}
+.notifications__notification {
+  min-width: 300px;
+  background: white;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 11pt;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 10px solid;
+  border-radius: 5px;
+  box-shadow: 4px 4px 7px 0 #B0B0B0;
+}
+.notifications__notification.info {
+  border-color: #3498db;
+}
+.notifications__notification.warning {
+  border-color: #e59708;
+}
+.notifications__notification.error {
+  border-color: #9f0e23;
+}
+/*# sourceMappingURL=notification.component.css.map */

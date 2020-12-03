@@ -1,8 +1,23 @@
+/* Main colors */
+
+@main-color-1: #ff5e00;
+@main-color-2: #000000;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.body {
+  flex: 1 0 auto;
+}
+
 .header {
   display: flex;
   flex-direction: row;
 
-  padding: 50px 100px;
+  padding: 50px 100px 20px 100px;
 
   &__title-block {
     width: 260px;
@@ -28,7 +43,7 @@
     width: auto;
     border-left: 1px solid gray;
     margin-left: @indent;
-    padding-left: @indent;
+    padding-right: @indent;
     vertical-align: middle;
 
     &_item {
@@ -37,9 +52,17 @@
     }
 
     &_item:hover {
-      background: #ff7c30;
+      background: @main-color-1;
       color: white;
       cursor: pointer;
     }
   }
+}
+
+.footer {
+  background: black;
+  padding: 30px 170px;
+  margin: 40px 0 0 0;
+  color: white;
+  font-size: 11pt;
 }

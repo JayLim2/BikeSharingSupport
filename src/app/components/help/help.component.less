@@ -1,0 +1,25 @@
+/* Main colors */
+
+@main-color-1: #ff5e00;
+@main-color-2: #000000;
+
+.folding {
+  color: @main-color-1;
+  text-decoration: none;
+  border-bottom: 1px dashed @main-color-1;
+
+  &:hover {
+    cursor: pointer;
+    color: @main-color-2;
+    border-bottom-color: @main-color-2;
+  }
+
+  &__content {
+    @indent: 15px;
+    @folding-common-indent: @indent @indent @indent;
+
+    border-left: 1px solid @main-color-1;
+    margin: @folding-common-indent 0;
+    padding: @folding-common-indent @indent;
+  }
+}

@@ -1,8 +1,20 @@
 <div class="page">
-  <div class="page__header">
+  <div class="page__title">
     Вопросы и ответы
   </div>
-  <div class="page__body">
-    Скоро.
+  <div class="page__content">
+    Здесь собраны наиболее популярные вопросы. Если данный раздел Вам не помог,
+    <a href="mailto:support@meduslugi.ru">напишите нам</a>.
+
+    <ng-container *ngFor="let question of questions">
+      <div style="margin-top: 20px">
+        <a class="folding"
+           (click)="openQuestion(question)"
+        >{{question.question}}</a>
+        <div class="folding__content"
+             [style]="'display:' + (question.isOpened ? 'block' : 'none')"
+        >{{question.answer}}</div>
+      </div>
+    </ng-container>
   </div>
 </div>
