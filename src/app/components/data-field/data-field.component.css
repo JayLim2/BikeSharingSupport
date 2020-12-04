@@ -1,0 +1,10 @@
+.data-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+.data-field__title {
+  font-size: 9pt;
+  color: gray;
+}
+/*# sourceMappingURL=data-field.component.css.map */

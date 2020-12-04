@@ -1,0 +1,32 @@
+.tickets {
+  display: flex;
+  flex-direction: column;
+}
+.tickets .ticket {
+  width: 70%;
+  border: 1px solid #0065b1;
+  border-radius: 4px;
+  margin-top: 25px;
+  padding: 25px 25px 15px 25px;
+}
+.tickets .ticket.in-popup {
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 10px;
+}
+.tickets .ticket__header {
+  color: #0065b1;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.tickets .ticket__content {
+  display: flex;
+}
+.tickets .ticket__content .data {
+  width: calc(100% - 170px);
+}
+.tickets .ticket__content .controls {
+  width: 150px;
+}
+/*# sourceMappingURL=profile.component.css.map */

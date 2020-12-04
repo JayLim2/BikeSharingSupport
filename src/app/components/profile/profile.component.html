@@ -1,8 +1,107 @@
+<ngx-spinner></ngx-spinner>
+
 <div class="page">
-  <div class="page__header">
-    Мои обращения
+  <div class="page__title">
+    Личный кабинет
   </div>
-  <div class="page__body">
-    Скоро.
+  <div class="page__content">
+    <div class="tabs">
+      <div class="tab"
+           [ngClass]="selectedTab === 'main' ? 'selected' : ''"
+           (click)="onTabClick('main')"
+      >Основные данные</div>
+      <div class="tab"
+           [ngClass]="selectedTab === 'tickets' ? 'selected' : ''"
+           (click)="onTabClick('tickets')"
+      >Талоны</div>
+    </div>
+
+    <ng-container [ngSwitch]="selectedTab">
+      <ng-container *ngSwitchCase="'main'">
+        <ng-content *ngTemplateOutlet="main"></ng-content>
+      </ng-container>
+      <ng-container *ngSwitchCase="'tickets'">
+        <ng-content *ngTemplateOutlet="tickets"></ng-content>
+      </ng-container>
+    </ng-container>
   </div>
 </div>
+
+<ng-template #main>
+  <ng-container [ngSwitch]="currentUser.role">
+    Вы вошли как
+    <ng-container *ngSwitchCase="'CLIENT'">
+      <b>клиент</b>
+    </ng-container>
+    <ng-container *ngSwitchCase="'SUPPORT'">
+      <b>сотрудник службы поддержки</b>
+    </ng-container>
+    <ng-container *ngSwitchCase="'ADMIN'">
+      <b>администратор</b>
+    </ng-container>
+  </ng-container>
+
+  <div style="display: flex; margin:25px 0;">
+    <!-- avatar -->
+    <div style="display: flex; flex-direction: column;text-align: center">
+      <img src="https://sun9-21.userapi.com/c849028/v849028742/163975/Xx9_qlxiDng.jpg"
+           style="width: 140px; border-radius: 10px"
+           alt="Фото профиля"
+      />
+    </div>
+    <!-- main data -->
+    <div style="display: flex; flex-direction: column; margin-left: 25px;">
+      <data-field [name]="'Фамилия, имя, отчество'"
+                  [value]="getCurrentUserName()"
+      ></data-field>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #tickets>
+  <div>
+    <ng-container [ngSwitch]="currentUser.role">
+      <ng-container *ngSwitchCase="'CLIENT'">
+        Здесь вы можете посмотреть свои обращения в службу поддержки.
+        <button class="button medium"
+                style="width: 250px; margin-left: 20px"
+                routerLink="/tickets/create"
+        >Обратиться в службу поддержки</button>
+      </ng-container>
+      <ng-container *ngSwitchCase="'SUPPORT'">
+        Здесь вы можете посмотреть обращения, которые назначены Вам.
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="tickets">
+    <div *ngFor="let ticket of ticketsList"
+         class="ticket"
+    >
+      <div class="ticket__header">
+        Обращение по заказу № {{ticket.order.id}}
+      </div>
+      <div class="ticket__content">
+        <div class="data">
+          <data-field [name]="'Статус'"
+                      [value]="ticket.status.name"
+          ></data-field>
+          <data-field [name]="'Клиент'"
+                      [value]="[ticket.order.user.lastName, ticket.order.user.firstName, ticket.order.user.middleName || ''].join(' ')"
+          ></data-field>
+        </div>
+
+        <div class="controls">
+          <popup [popupTitle]="'Отменить обращение?'"
+                 [buttonTitle]="'Отменить обращение'"
+                 [styles]="'reject-button available-width'"
+                 [type]="'confirm'"
+                 (onConfirm)="onCancelTicket(ticket)"
+          >
+            Вы действительно хотите отменить обращение?
+          </popup>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

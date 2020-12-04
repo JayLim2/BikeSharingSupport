@@ -1,0 +1,123 @@
+<div class="page">
+  <div class="page__title">
+    Регистрация
+  </div>
+  <div class="page__content">
+    <form style="display: flex; flex-direction: column"
+          [formGroup]="registerForm"
+          (ngSubmit)="onRegister()"
+    >
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label_required">
+            Мобильный телефон:
+          </div>
+          <input type="tel"
+                 placeholder="+79001112233"
+                 formControlName="phone"
+          />
+        </div>
+
+        <div class="form-field__hint">
+          Будет Вашим логином в системе.
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label_required">
+            Пароль:
+          </div>
+          <input type="password"
+                 placeholder="Пароль"
+                 formControlName="password"
+          />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label_required">
+            Еще раз пароль:
+          </div>
+          <input type="password"
+                 placeholder="Повторите пароль"
+                 formControlName="verifyPassword"
+          />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label_required">
+            Фамилия:
+          </div>
+          <input type="text"
+                 placeholder="Иванов"
+                 formControlName="lastName"
+          />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label_required">
+            Имя:
+          </div>
+          <input type="text"
+                 placeholder="Иван"
+                 formControlName="firstName"
+          />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label">
+            Отчество:
+          </div>
+          <input type="text"
+                 placeholder="Иванович"
+                 formControlName="middleName"
+          />
+        </div>
+
+        <div class="form-field__hint">
+          Если есть отчество.
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div class="form-field__control-container">
+          <div class="form-field__label_required">
+            Серия и номер паспорта:
+          </div>
+          <input type="text"
+                 placeholder="1234 567890"
+                 formControlName="passport"
+          />
+        </div>
+
+        <div class="form-field__hint">
+          Серия состоит из <b>4 цифр</b>.
+          <br/>
+          Номер состоит из <b>6 цифр</b>.
+          <br/>
+          Написаны на боковой стороне главной страницы паспорта.
+        </div>
+      </div>
+
+      <div class="form-field" style="width: 100%">
+        <button class="button medium"
+                type="submit"
+                style="width: 250px"
+        >Зарегистрироваться</button>
+        <div class="info">
+          Нажимая на кнопку "Зарегистрироваться", Вы разрешаете ООО "ГетВелосипед"
+          обрабатывать Ваши персональные данные в соответствии с законом и
+          нашим <a href="#">соглашением о персональных данных</a>.
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

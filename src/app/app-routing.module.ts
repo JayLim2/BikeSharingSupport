@@ -8,11 +8,13 @@ import {TicketPageComponent} from "./components/ticket-page/ticket-page.componen
 import {HelpComponent} from "./components/help/help.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {AuthGuard} from "./helpers/auth.guard";
+import {RegisterComponent} from "./components/register/register.component";
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
   {path: 'tickets', component: TicketsComponent, canActivate: [AuthGuard]},
   {path: 'tickets/view/:ticketId', component: TicketPageComponent, canActivate: [AuthGuard]},
   {path: 'tickets/create', component: CreateTicketFormComponent, canActivate: [AuthGuard]},

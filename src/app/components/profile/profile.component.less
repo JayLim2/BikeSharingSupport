@@ -1,0 +1,40 @@
+@med-blue-color: rgb(0, 101, 177);
+@med-red-color: rgb(238, 63, 88);
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+
+  .ticket {
+    width: 70%;
+    border:1px solid @med-blue-color;
+    border-radius: 4px;
+    margin-top: 25px;
+    padding: 25px 25px 15px 25px;
+
+    &.in-popup {
+      width: 100%;
+      border: 0;
+      margin: 0;
+      padding: 10px;
+    }
+
+    &__header {
+      color: @med-blue-color;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    &__content {
+      display: flex;
+
+      .data {
+        width: calc(100% - 170px);
+      }
+
+      .controls {
+        width: 150px;
+      }
+    }
+  }
+}
