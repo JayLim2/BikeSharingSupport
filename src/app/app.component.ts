@@ -18,6 +18,10 @@ export class AppComponent {
     public authenticationService: AuthenticationService,
     private router: Router
   ) {
+    this.authenticationService.currentUserObservable
+      .subscribe(currentUser => {
+        this.currentUser = currentUser;
+      })
   }
 
   ngOnInit() {

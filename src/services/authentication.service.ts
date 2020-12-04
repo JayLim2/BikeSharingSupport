@@ -39,7 +39,12 @@ export class AuthenticationService {
     let token = window.btoa(login + ':' + password);
     localStorage.setItem('token', token);
     return this.http.get<any>(
-      `${environment.routes.api}/users/get/login/${login}`
+      `${environment.routes.api}/users/get`,
+      {
+        params: {
+          id: login
+        }
+      }
     ).pipe(map((user) => {
       if (user) {
         localStorage.setItem('currentUser', JSON.stringify(user));

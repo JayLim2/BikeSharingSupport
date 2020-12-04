@@ -42,32 +42,26 @@
       <div class="header__menu-block">
         <div class="header__menu-block_item"
              routerLink=""
-        >Главная
-        </div>
+        >Главная</div>
         <div class="header__menu-block_item"
              routerLink="help"
-        >Помощь
-        </div>
+        >Помощь</div>
 
         <ng-container *ngIf="currentUser; else unauthorizedUserMenu">
           <div class="header__menu-block_item"
                routerLink="profile"
-          >Мой личный кабинет
-          </div>
+          >Мой личный кабинет</div>
           <div class="header__menu-block_item"
                (click)="logout()"
-          >Выйти
-          </div>
+          >Выйти</div>
         </ng-container>
         <ng-template #unauthorizedUserMenu>
           <div class="header__menu-block_item"
                routerLink="login"
-          >Войти
-          </div>
+          >Войти</div>
           <div class="header__menu-block_item"
                routerLink="register"
-          >Регистрация
-          </div>
+          >Регистрация</div>
         </ng-template>
       </div>
     </header>
