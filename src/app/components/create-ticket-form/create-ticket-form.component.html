@@ -1,8 +1,76 @@
+<ngx-spinner></ngx-spinner>
+
 <div class="page">
-  <div class="page__header">
-    Сообщить о проблеме
+  <div class="page__title">
+    Обратиться в службу поддержки
   </div>
-  <div class="page__body">
-    Скоро.
+  <div class="page__content">
+    Постарайтесь как можно подробнее описать проблему - мы Вам поможем в течение 15 минут.
+
+    <ng-container *ngIf="orders && orders.length > 0; else noOrders">
+      <form style="display: flex; flex-direction: column"
+            [formGroup]="form"
+            (ngSubmit)="onCreateTicket()"
+      >
+        <div class="form-field">
+          <div class="form-field__control-container">
+            <div class="form-field__label_required">
+              Заказ:
+            </div>
+            <select formControlName="order"
+                    (change)="onSelectOrder($event)"
+            >
+              <option *ngFor="let order of orders"
+                      [value]="order.id"
+              >{{'Заказ № ' + order.id + ' ' + order.startTime}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <div class="form-field__control-container">
+            <div class="form-field__label_required">
+              Кратко опишите вопрос/проблему:
+            </div>
+            <textarea formControlName="description"
+                      placeholder="Например, не открывается замок после начала аренды"
+            ></textarea>
+          </div>
+
+          <div class="form-field__hint">
+            Постарайтесь подробно и ясно изложить суть вопроса или возникшей проблемы,
+            чтобы служба поддержки могла оперативно ответить. Обращаем внимание, что все
+            диалоги сохраняются.
+          </div>
+        </div>
+
+        <div class="form-field" style="width: 100%">
+          <button class="button medium"
+                  type="submit"
+                  style="width: 250px"
+          >Отправить</button>
+          <div class="info">
+            Будет зарегистрировано обращение в службу поддержки, которое сохранится в Вашем
+            личном кабинете.
+          </div>
+        </div>
+      </form>
+    </ng-container>
+
+    <ng-template #noOrders>
+      <div style="padding-top: 20px;">
+        К сожалению, Вы еще не пользовались нашим сервисом.
+        <br/>
+        <popup [buttonTitle]="'Исправить'"
+               [type]="'info'"
+               [popupTitle]="'Информация'"
+               [styles]="'long-button'"
+        >
+          Увы, бюджета хватило только на сайт службы поддержки.
+        </popup>
+
+      </div>
+    </ng-template>
+
   </div>
 </div>
