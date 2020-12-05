@@ -16,10 +16,11 @@ export class TicketsService {
   ) {
   }
 
-  public getByUser(user: User): Observable<Ticket[]> {
-    return this.restService.get(`${this.commonUrl}/get/patient/${user.phone}`);
-  }
+  // TODO cleanup
 
+  public getByUser(user: User): Observable<Ticket[]> {
+    return this.restService.get(`${this.commonUrl}/get/user/${user.username}`);
+  }
 
   public getAll(): Observable<Ticket[]> {
     return this.restService.get(`${this.commonUrl}/get/all`);

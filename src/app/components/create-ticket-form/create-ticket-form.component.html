@@ -22,7 +22,7 @@
             >
               <option *ngFor="let order of orders"
                       [value]="order.id"
-              >{{'Заказ № ' + order.id + ' ' + order.startTime}}</option>
+              >{{'Заказ № ' + order.id + ' от ' + order.startTime}}</option>
             </select>
           </div>
         </div>

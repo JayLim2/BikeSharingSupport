@@ -1,7 +1,7 @@
 import {Role} from "./role.model";
 
 export class User {
-  phone: string;
+  username: string;
   password: string;
   role: Role;
   firstName: string;
@@ -12,7 +12,7 @@ export class User {
               role: Role,
               firstName: string, lastName: string, middleName: string) {
 
-    this.phone = phone;
+    this.username = phone;
     this.password = password;
     this.role = role;
     this.firstName = firstName;

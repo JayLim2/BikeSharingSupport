@@ -56,12 +56,16 @@ export class CreateTicketFormComponent implements OnInit {
 
     this._form = new FormGroup({
       order: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
     })
 
     this.ordersService.getOrdersByUser(
       this.authenticationService.currentUserValue
     ).subscribe((list: Order[] = []) => {
-      this._orders = list;
+      if (list && list.length > 0) {
+        this._orders = list;
+        this.setSelectedOrder(this._orders[0].id);
+      }
     }, (error) => {
       console.error(error);
     }).add(() => {
@@ -73,6 +77,12 @@ export class CreateTicketFormComponent implements OnInit {
     this.overlayService.show();
 
     let selectedOrder = event.target.value;
+    this.setSelectedOrder(selectedOrder);
+
+    this.overlayService.hide();
+  }
+
+  private setSelectedOrder(selectedOrder: any): void {
     this.form.get("order").setValue(
       selectedOrder,
       {onlySelf: true}

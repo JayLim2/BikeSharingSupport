@@ -19,7 +19,7 @@ export class OrdersService {
   public getOrdersByUser(user: User): Observable<Order[]> {
     return this.restService.get(`${this.commonUrl}/get/user`, {
       params: {
-        userId: user.phone
+        userId: user.username
       }
     });
   }
