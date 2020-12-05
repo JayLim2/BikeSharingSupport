@@ -50,9 +50,9 @@ export class CreateTicketFormComponent implements OnInit {
 
     this.activatedRoute.queryParams
       .subscribe(params => {
-        let doctorIdParam = Number.parseInt(params["order"]);
-        if (!Number.isNaN(doctorIdParam)) {
-          this.selectedOrderId = doctorIdParam;
+        let orderParam = Number.parseInt(params["order"]);
+        if (!Number.isNaN(orderParam)) {
+          this.selectedOrderId = orderParam;
         }
       })
 
@@ -61,12 +61,12 @@ export class CreateTicketFormComponent implements OnInit {
       description: new FormControl(null, Validators.required),
     })
 
-    this.ordersService.getOrdersByUser(
+    this.ordersService.getByUser(
       this.authenticationService.currentUserValue
     ).subscribe((list: Order[] = []) => {
       if (list && list.length > 0) {
         this._orders = list;
-        this.setSelectedOrder(this._orders[0].id);
+        this.setSelectedOrder(this.selectedOrderId ? this.selectedOrderId : this._orders[0].id);
       }
     }, (error) => {
       console.error(error);

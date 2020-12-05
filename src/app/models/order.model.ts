@@ -9,4 +9,5 @@ export class Order {
   tariff?: Tariff;
   startTime?: string;
   endTime?: string;
+  cost?: number; // calculable field, not from entity
 }

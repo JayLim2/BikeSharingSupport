@@ -11,6 +11,10 @@
            (click)="onTabClick('main')"
       >Основные данные</div>
       <div class="tab"
+           [ngClass]="selectedTab === 'orders' ? 'selected' : ''"
+           (click)="onTabClick('orders')"
+      >Мои заказы</div>
+      <div class="tab"
            [ngClass]="selectedTab === 'tickets' ? 'selected' : ''"
            (click)="onTabClick('tickets')"
       >Мои обращения</div>
@@ -19,6 +23,9 @@
     <ng-container [ngSwitch]="selectedTab">
       <ng-container *ngSwitchCase="'main'">
         <ng-content *ngTemplateOutlet="main"></ng-content>
+      </ng-container>
+      <ng-container *ngSwitchCase="'orders'">
+        <ng-content *ngTemplateOutlet="orders"></ng-content>
       </ng-container>
       <ng-container *ngSwitchCase="'tickets'">
         <ng-content *ngTemplateOutlet="tickets"></ng-content>
@@ -54,6 +61,43 @@
       <data-field [name]="'Фамилия, имя, отчество'"
                   [value]="getCurrentUserName()"
       ></data-field>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #orders>
+  <div class="tickets">
+    <div *ngFor="let order of ordersList"
+         class="ticket"
+    >
+      <div class="ticket__header">
+        Поездка № {{order.id}}
+      </div>
+      <div class="ticket__content">
+        <div class="data">
+          <data-field [name]="'Тариф'"
+                      [value]="order.tariff.name"
+          ></data-field>
+          <data-field [name]="'Транспорт'"
+                      [value]="order.bike.brand + ' ' + order.bike.model"
+          ></data-field>
+          <data-field [name]="'Начало поездки'"
+                      [value]="order.startTime"
+          ></data-field>
+          <data-field [name]="'Конец поездки'"
+                      [value]="order.endTime ? order.endTime : 'В пути'"
+          ></data-field>
+          <data-field [name]="'Стоимость'"
+                      [value]="order.cost + ' &#8381;'"
+          ></data-field>
+        </div>
+
+        <div class="controls">
+          <button class="button available-width"
+                  (click)="onNeedSupport(order.id)"
+          >Нужна помощь</button>
+        </div>
+      </div>
     </div>
   </div>
 </ng-template>

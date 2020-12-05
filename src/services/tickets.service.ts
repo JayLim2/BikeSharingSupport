@@ -19,7 +19,11 @@ export class TicketsService {
   // TODO cleanup
 
   public getByUser(user: User): Observable<Ticket[]> {
-    return this.restService.get(`${this.commonUrl}/get/user/${user.username}`);
+    return this.restService.get(`${this.commonUrl}/get/user`, {
+      params: {
+        userId: user.username
+      }
+    });
   }
 
   public getAll(): Observable<Ticket[]> {
