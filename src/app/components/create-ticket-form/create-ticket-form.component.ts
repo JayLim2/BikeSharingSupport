@@ -8,6 +8,8 @@ import {NotificationService} from "../../../services/notification.service";
 import {Order} from "../../models/order.model";
 import {OrdersService} from "../../../services/orders.service";
 import {TicketsService} from "../../../services/tickets.service";
+import {Ticket} from "../../models/ticket.model";
+import {Constants} from "../../common/constants.utils";
 
 @Component({
   selector: 'app-create-ticket-form',
@@ -96,10 +98,14 @@ export class CreateTicketFormComponent implements OnInit {
     }
 
     const value = this.form.value;
-    let ticket = {
+    let ticket: Ticket = {
       order: {
         id: +value.order
       },
+      messages: [{
+        text: value.description,
+        dateTime: this.dateTimeService.dateToString(new Date(), Constants.PRETTY_DATE_TIME)
+      }],
       status: {
         name: "Поиск оператора"
       }

@@ -4,7 +4,7 @@
 }
 .tickets .ticket {
   width: 70%;
-  border: 1px solid #0065b1;
+  border: 1px solid #000000;
   border-radius: 4px;
   margin-top: 25px;
   padding: 25px 25px 15px 25px;
@@ -16,7 +16,7 @@
   padding: 10px;
 }
 .tickets .ticket__header {
-  color: #0065b1;
+  color: #000000;
   font-weight: bold;
   margin-bottom: 10px;
 }

@@ -57,17 +57,17 @@ a {
   margin: @control-margin;
   padding: @control-padding + 5px;
 
+  &:hover {
+    background: #ff7c30;
+    cursor: pointer;
+  }
+
   &.available-width {
     width: 100% !important;
   }
 
   &.long-button {
     width: 250px !important;
-  }
-
-  &:hover {
-    background: #ff7c30;
-    cursor: pointer;
   }
 
   &.outline {
@@ -86,7 +86,7 @@ a {
     background: @main-color-2;
 
     &:hover {
-      background: darken(@main-color-2, 25%);
+      background: lighten(@main-color-2, 25%);
     }
   }
 
