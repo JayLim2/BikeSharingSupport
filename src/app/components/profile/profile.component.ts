@@ -74,9 +74,9 @@ export class ProfileComponent implements OnInit {
   onCancelTicket(ticket: Ticket) {
     let localIndex = this.ticketsList.indexOf(ticket);
     if (localIndex > -1) {
-      this.ticketsList.splice(localIndex, 1);
       this.ticketsService.delete(ticket)
         .subscribe(() => {
+          this.ticketsList.splice(localIndex, 1);
           this.ns.info(`Обращение по заказу № ${ticket.order.id} успешно отменено.`);
         }, (error) => {
           this.ns.error("Ошибка отмены обращения по заказу. Если проблема не исчезает - обратитесь по телефону 8-800-300-40-50.");

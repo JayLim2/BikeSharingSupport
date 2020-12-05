@@ -31,7 +31,7 @@ export class TicketsService {
   }
 
   public delete(ticket: Ticket): Observable<any> {
-    return this.restService.delete(`${this.commonUrl}/delete/${ticket.order.id}`);
+    return this.restService.delete(`${this.commonUrl}/delete/${ticket.id}`);
   }
 
 }

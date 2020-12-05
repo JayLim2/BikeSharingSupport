@@ -57,19 +57,16 @@
       <ng-container *ngSwitchCase="'info'">
         <button type="button" class="btn btn-dark"
                 (click)="close(modal, 'reject')"
-        >Закрыть
-        </button>
+        >Закрыть</button>
       </ng-container>
       <!-- confirm window -->
       <ng-container *ngSwitchCase="'confirm'">
         <button type="button" class="btn btn-danger"
                 (click)="close(modal, 'approve')"
-        >Хорошо
-        </button>
-        <button type="button" class="btn btn-primary"
+        >Хорошо</button>
+        <button type="button" class="btn btn-dark"
                 (click)="close(modal, 'reject')"
-        >Передумал
-        </button>
+        >Передумал</button>
       </ng-container>
     </ng-container>
   </div>
