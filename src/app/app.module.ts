@@ -23,6 +23,7 @@ import {FakeBackendInterceptor} from "./helpers/fake-backend.interceptor";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {DataFieldComponent} from "./components/data-field/data-field.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { StatusFieldComponent } from './components/status-field/status-field.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     NotificationComponent,
     PopupComponent,
     RegisterComponent,
-    DataFieldComponent
+    DataFieldComponent,
+    StatusFieldComponent
   ],
   imports: [
     BrowserModule,

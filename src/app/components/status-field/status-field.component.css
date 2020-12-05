@@ -1,0 +1,9 @@
+.status-field {
+  width: max-content;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: black;
+  font-size: 10pt;
+  color: white;
+}
+/*# sourceMappingURL=status-field.component.css.map */

@@ -83,12 +83,13 @@
       </div>
       <div class="ticket__content">
         <div class="data">
-          <data-field [name]="'Статус'"
-                      [value]="ticket.status.name"
-          ></data-field>
-          <data-field [name]="'Клиент'"
-                      [value]="[ticket.order.user.lastName, ticket.order.user.firstName, ticket.order.user.middleName || ''].join(' ')"
-          ></data-field>
+          <status-field [status]="ticket.status"
+          ></status-field>
+          <div style="margin-top: 10px;">
+            <data-field [name]="'Клиент'"
+                        [value]="[ticket.order.user.lastName, ticket.order.user.firstName, ticket.order.user.middleName || ''].join(' ')"
+            ></data-field>
+          </div>
         </div>
 
         <div class="controls">
