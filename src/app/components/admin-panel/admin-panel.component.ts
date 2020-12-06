@@ -11,6 +11,8 @@ import {TicketStatusesService} from "../../../services/ticket-statuses.service";
 import {BikesService} from "../../../services/bikes.service";
 import {Observable} from "rxjs";
 import {AdminUtils} from "../../common/admin.utils";
+import {NotificationService} from "../../../services/notification.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 class Data {
   User: User[] = [];
@@ -26,6 +28,14 @@ class Fields {
   TimeUnit: string[] = [];
   TicketStatus: string[] = [];
   Bike: string[] = [];
+}
+
+class Forms {
+  User: FormGroup;
+  Tariff: FormGroup;
+  TimeUnit: FormGroup;
+  TicketStatus: FormGroup;
+  Bike: FormGroup;
 }
 
 @Component({
@@ -45,6 +55,7 @@ export class AdminPanelComponent implements OnInit {
 
   public readonly data: Data = new Data();
   public readonly fields: Fields = new Fields();
+  public readonly forms: Forms = new Forms();
 
   constructor(
     private usersService: UsersService,
@@ -52,7 +63,8 @@ export class AdminPanelComponent implements OnInit {
     private timeUnitsService: TimeUnitsService,
     private ticketStatusesService: TicketStatusesService,
     private bikesService: BikesService,
-    public adminUtils: AdminUtils
+    public adminUtils: AdminUtils,
+    private ns: NotificationService
   ) {
   }
 
@@ -68,12 +80,24 @@ export class AdminPanelComponent implements OnInit {
             this.data[entityName] = list;
             this.fields[entityName] = Object.keys(first)
               .filter((field) => !this.adminUtils.isExcluded(field));
+
+            this.forms[entityName] = new FormGroup({});
+            for (const field of this.fields[entityName]) {
+              (<FormGroup>this.forms[entityName]).addControl(
+                field,
+                new FormControl(null)
+              );
+            }
           }
         }, (error) => {
           console.error(`Error in entity '${entityName}': ${error}`);
         })
       }
     }
+  }
+
+  onAdd(entityName: string) {
+    console.log("Add: ", entityName);
   }
 
   onEdit(entityName: string, id: any): void {
@@ -84,7 +108,13 @@ export class AdminPanelComponent implements OnInit {
     console.log("Delete: ", entityName, " id = ", id);
     let service = this.getService(entityName);
     if (service) {
-      let observable = service.deleteById(id);
+      service.deleteById(id)
+        .subscribe(() => {
+          this.ns.info(`Сущность '${entityName} с ID = '${id}' успешно удалена.`)
+        }, (error) => {
+          this.ns.error(`Сущность '${entityName} с ID = '${id}' не может быть удалена.`)
+          console.error(entityName, " => ", error);
+        })
     }
   }
 

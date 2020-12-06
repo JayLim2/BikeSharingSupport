@@ -1,32 +1,52 @@
 <div *ngFor="let entityName of data | adminData">
   <b>{{entityName}}</b>
 
-  <table class="admin-table">
-    <tr>
-      <th *ngFor="let field of fields[entityName]">
-        {{field}}
-      </th>
-      <th></th>
-    </tr>
-    <tr *ngFor="let item of data[entityName]">
-      <td *ngFor="let property of item | adminData">
-        <ng-container *ngIf="!adminUtils.isExcluded(property)">
-          {{item[property] | toString}}
-        </ng-container>
-      </td>
-      <td>
-        <button class="btn btn-primary"
-                (click)="onEdit(entityName, getId(item))"
-        >
-          <fa-icon [icon]="'pencil-alt'"></fa-icon>
-        </button>
-        <button class="btn btn-danger"
-                style="margin-left: 10px"
-                (click)="onDelete(entityName, getId(item))"
-        >
-          <fa-icon [icon]="'trash-alt'"></fa-icon>
-        </button>
-      </td>
-    </tr>
-  </table>
+  <form *ngIf="forms[entityName]"
+        [formGroup]="forms[entityName]"
+        (ngSubmit)="onAdd(entityName)"
+  >
+    <table class="admin-table">
+      <tr>
+        <th *ngFor="let field of fields[entityName]">
+          {{field}}
+        </th>
+        <th></th>
+      </tr>
+      <tr>
+        <td *ngFor="let field of fields[entityName]">
+          <input type="text"
+                 [placeholder]="field"
+                 [formControlName]="field"
+          />
+        </td>
+        <td>
+          <button class="btn btn-success"
+                  type="submit"
+          >
+            <fa-icon [icon]="'check'"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      <tr *ngFor="let item of data[entityName]">
+        <td *ngFor="let property of item | adminData">
+          <ng-container *ngIf="!adminUtils.isExcluded(property)">
+            {{item[property] | toString}}
+          </ng-container>
+        </td>
+        <td>
+          <button class="btn btn-primary"
+                  (click)="onEdit(entityName, getId(item))"
+          >
+            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+          </button>
+          <button class="btn btn-danger"
+                  style="margin-left: 10px"
+                  (click)="onDelete(entityName, getId(item))"
+          >
+            <fa-icon [icon]="'trash-alt'"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
 </div>
