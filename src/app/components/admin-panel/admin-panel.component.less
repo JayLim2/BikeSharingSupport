@@ -1,0 +1,24 @@
+.admin-table-border {
+  border: 1px solid #bababa;
+}
+
+.admin-table {
+  .admin-table-border;
+
+  width: max-content;
+  margin: 5px 0 20px 0;
+
+  @cell-padding: 10px;
+
+  th {
+    .admin-table-border;
+    padding: @cell-padding;
+    background: #cccccc;
+  }
+
+  td {
+    .admin-table-border;
+    padding: @cell-padding;
+  }
+
+}
