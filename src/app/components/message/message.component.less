@@ -1,0 +1,58 @@
+@main-color-1: #ff5e00;
+@main-color-2: #000000;
+
+@input-message-width: 80%;
+
+@current-user-background-color: rgb(240, 240, 240);
+@other-user-background-color: lighten(@main-color-1, 45%);
+
+@current-user-font-color: gray;
+@other-user-font-color: orangered;
+
+.chat-message-container {
+  display: flex;
+  width: 100%;
+  padding-top: 10px;
+
+  &.current {
+    justify-content: flex-end;
+  }
+
+  &.other {
+    justify-content: flex-start;
+  }
+}
+
+.chat-message-info-container {
+  display: flex;
+  font-size: 8pt;
+
+  &.current {
+    color: @current-user-font-color;
+  }
+
+  &.other {
+    color: @other-user-font-color;
+  }
+
+  .right {
+    flex-grow: 1; text-align: right
+  }
+}
+
+.chat-message {
+  width: 0.8 * @input-message-width;
+  margin: 0;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 11pt;
+  color: black;
+
+  &.current {
+    background: @current-user-background-color;
+  }
+
+  &.other {
+    background: @other-user-background-color;
+  }
+}

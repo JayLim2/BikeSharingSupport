@@ -104,7 +104,10 @@ export class CreateTicketFormComponent implements OnInit {
       },
       messages: [{
         text: value.description,
-        dateTime: this.dateTimeService.dateToString(new Date(), Constants.PRETTY_DATE_TIME)
+        dateTime: this.dateTimeService.dateToString(new Date(), Constants.PRETTY_DATE_TIME),
+        user: {
+          username: this.authenticationService.currentUserValue.username
+        }
       }],
       status: {
         name: "Поиск оператора"

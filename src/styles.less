@@ -57,8 +57,10 @@ a {
   margin: @control-margin;
   padding: @control-padding + 5px;
 
+  @hover-color: #ff7c30;
+
   &:hover {
-    background: #ff7c30;
+    background: @hover-color;
     cursor: pointer;
   }
 
@@ -76,10 +78,13 @@ a {
     border: 1px solid @main-color-1;
 
     &:hover {
-      @darken-color: darken(@main-color-1, 15%);
-      border-color: @darken-color;
-      color: @darken-color;
+      border-color: @hover-color;
+      color: @hover-color;
     }
+  }
+
+  &.inline {
+    display: inline;
   }
 
   &.reject-button {

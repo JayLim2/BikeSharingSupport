@@ -1,8 +1,72 @@
+<ngx-spinner></ngx-spinner>
+
 <div class="page">
-  <div class="page__header">
-    Тикет № 9999
+  <div class="page__title">
+    Обращение по заказу № {{ticket?.order.id}}
   </div>
-  <div class="page__body">
-    Скоро.
+  <div class="page__content">
+    <ng-container *ngIf="ticket && ticket.messages.length > 0; else noTicket">
+      <div style="display: flex; width: 100%;">
+        <!-- left side -->
+        <div style="width: 80%;">
+          <div class="chat">
+            <message *ngFor="let message of ticket.messages"
+                     [message]="message"
+            ></message>
+          </div>
+          <form style="display: flex; flex-direction: column"
+                [formGroup]="messageForm"
+                (ngSubmit)="onSendMessage()"
+          >
+        <textarea class="message-input-control"
+                  formControlName="message"
+                  placeholder="Введите сообщение"
+        ></textarea>
+
+            <div class="form-field" style="width: 100%">
+              <button class="button medium"
+                      type="submit"
+                      style="width: 250px"
+              >Отправить
+              </button>
+              <div class="info">
+                Все сообщения хранятся и просматриваются отделом контроля качества.
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- right side -->
+        <div style="padding-left: 20px;">
+          <status-field [status]="ticket.status"
+          ></status-field>
+          <div style="padding-top:10px;">
+            <data-field [name]="'Оператор'"
+                        [value]="ticket.order.user.firstName"
+            ></data-field>
+          </div>
+          <button class="button available-width outline"
+          >Детали заказа</button>
+          <ng-container [ngSwitch]="ticket.status.name">
+            <ng-container *ngSwitchCase="'Поиск оператора'">
+              <button class="button available-width"
+              >Взять в работу</button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'В работе'">
+              <button class="button available-width"
+              >Вопрос решен</button>
+              <button class="button available-width reject-button"
+              >Вопрос не решен</button>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noTicket>
+      <div style="padding-top: 20px;">
+        К сожалению, такого обращения мы не нашли.
+      </div>
+    </ng-template>
+
   </div>
 </div>

@@ -9,7 +9,7 @@ let users: User[] = [];
 let user = new User(
   '111-22-33',
   'root',
-  Role.ROLE_PATIENT,
+  Role.ROLE_CLIENT,
   'Sergei',
   'Komarov',
   "Gennadievich"

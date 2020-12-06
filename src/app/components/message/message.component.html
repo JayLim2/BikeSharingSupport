@@ -1,0 +1,13 @@
+<div [class]="'chat-message-container ' + type">
+  <div [class]="'chat-message ' + type">
+    {{message.text}}
+    <div [class]="'chat-message-info-container ' + type">
+      <span>
+        {{message.user.firstName}}
+      </span>
+      <span class="right">
+        {{message.dateTime}}
+      </span>
+    </div>
+  </div>
+</div>

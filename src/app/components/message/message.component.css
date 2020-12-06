@@ -1,0 +1,40 @@
+.chat-message-container {
+  display: flex;
+  width: 100%;
+  padding-top: 10px;
+}
+.chat-message-container.current {
+  justify-content: flex-end;
+}
+.chat-message-container.other {
+  justify-content: flex-start;
+}
+.chat-message-info-container {
+  display: flex;
+  font-size: 8pt;
+}
+.chat-message-info-container.current {
+  color: gray;
+}
+.chat-message-info-container.other {
+  color: orangered;
+}
+.chat-message-info-container .right {
+  flex-grow: 1;
+  text-align: right;
+}
+.chat-message {
+  width: 64%;
+  margin: 0;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 11pt;
+  color: black;
+}
+.chat-message.current {
+  background: #f0f0f0;
+}
+.chat-message.other {
+  background: #ffefe5;
+}
+/*# sourceMappingURL=message.component.css.map */

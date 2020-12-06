@@ -24,6 +24,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {DataFieldComponent} from "./components/data-field/data-field.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { StatusFieldComponent } from './components/status-field/status-field.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { StatusFieldComponent } from './components/status-field/status-field.com
     PopupComponent,
     RegisterComponent,
     DataFieldComponent,
-    StatusFieldComponent
+    StatusFieldComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

@@ -137,6 +137,9 @@
         </div>
 
         <div class="controls">
+          <button class="button available-width"
+                  [routerLink]="'/tickets/view/' + ticket.id"
+          >Чат</button>
           <popup [popupTitle]="'Отменить обращение?'"
                  [buttonTitle]="'Отменить обращение'"
                  [styles]="'reject-button available-width'"
