@@ -151,29 +151,20 @@ export class TicketPageComponent implements OnInit {
   }
 
   private assignToUser(user) {
-    let truncatedMessages = this.ticket.messages.map(msg => {
-      return {
-        id: msg.id,
-        text: msg.text,
-        dateTime: msg.dateTime,
-        user: {
-          username: msg.user.username
-        }
-      }
-    });
+    let truncatedMessages = this.getTruncatedMessages(this.ticket.messages);
     let ticket = {
       id: this.ticket.id,
       order: {
         id: this.ticket.order.id
       },
-      status: this.ticket.status,
+      status: this.getStatusByCondition(user, "В работе", "Поиск оператора"),
       messages: truncatedMessages,
       assignee: user ? {username: user.username} : null
     }
     this.overlayService.show();
-    this.ticketsService.save(ticket)
-      .subscribe(() => {
-        this.ticket.assignee = user;
+    this.ticketsService.save(ticket, true)
+      .subscribe((ticket) => {
+        this.ticket = ticket;
       }, (error) => {
         this.ns.error("Ошибка назначения оператора.");
         console.error(error);
@@ -189,6 +180,52 @@ export class TicketPageComponent implements OnInit {
 
   buildSelectOperatorName(operator: User) {
     return operator ? `${operator.firstName} ${operator.lastName}` : 'не назначен';
+  }
+
+  closeTicket(fixed: boolean) {
+    let status = this.getStatusByCondition(fixed, "Вопрос решен", "Вопрос не решен");
+    let truncatedMessages = this.getTruncatedMessages(this.ticket.messages);
+    let ticket = {
+      id: this.ticket.id,
+      order: {
+        id: this.ticket.order.id
+      },
+      status: status,
+      messages: truncatedMessages,
+      assignee: {
+        username: this.ticket.assignee.username
+      }
+    }
+    this.overlayService.show();
+    this.ticketsService.save(ticket, true)
+      .subscribe((ticket) => {
+        this.ticket = ticket;
+      }, (error) => {
+        this.ns.error("Ошибка закрытия обращения.");
+        console.error(error);
+      })
+      .add(() => {
+        this.overlayService.hide();
+      });
+  }
+
+  private getTruncatedMessages(messages: Message[]) {
+    return messages.map(msg => {
+      return {
+        id: msg.id,
+        text: msg.text,
+        dateTime: msg.dateTime,
+        user: {
+          username: msg.user.username
+        }
+      }
+    });
+  }
+
+  private getStatusByCondition(condition: any, ifTrue: string, ifFalse: string) {
+    return {
+      name: condition ? ifTrue : ifFalse
+    };
   }
 
 }

@@ -67,43 +67,44 @@
               ></data-field>
             </div>
           </popup>
-          <ng-container [ngSwitch]="ticket.status.name">
-            <ng-container *ngSwitchCase="'Поиск оператора'">
-              <!-- assign button -->
-              <ng-container *ngIf="authenticationService.currentUserValue.role === 'SUPPORT'">
-                <button
-                  *ngIf="!ticket.assignee || authenticationService.currentUserValue.username !== ticket.assignee.username; else assignToOther"
-                  class="button available-width"
-                  (click)="assignMe()"
-                >Взять в работу
-                </button>
-                <ng-template #assignToOther>
-                  <popup [formGroup]="reassignForm"
-                         [styles]="'available-width'"
-                         [buttonTitle]="'Сменить оператора'"
-                         [popupTitle]="'Сменить оператора'"
-                         [type]="'form'"
-                         (onSubmit)="assignOther()"
-                  >
-                    <select formControlName="operator">
-                      <option *ngFor="let operator of operators"
-                              [value]="buildSelectOperatorValue(operator)"
-                      >{{buildSelectOperatorName(operator)}}</option>
-                    </select>
-                  </popup>
-                </ng-template>
-              </ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="'В работе'">
-              <!-- resolution button -->
-              <button class="button available-width"
-              >Вопрос решен
+          <!-- assign button -->
+          <ng-container *ngIf="ticket.status.name !== 'Вопрос решен'">
+            <ng-container *ngIf="authenticationService.currentUserValue.role === 'SUPPORT'">
+              <button
+                *ngIf="!ticket.assignee || authenticationService.currentUserValue.username !== ticket.assignee.username; else assignToOther"
+                class="button available-width"
+                (click)="assignMe()"
+              >Взять в работу
               </button>
-              <button class="button available-width reject-button"
-              >Вопрос не решен
-              </button>
+              <ng-template #assignToOther>
+                <popup [formGroup]="reassignForm"
+                       [styles]="'available-width'"
+                       [buttonTitle]="'Сменить оператора'"
+                       [popupTitle]="'Сменить оператора'"
+                       [type]="'form'"
+                       (onSubmit)="assignOther()"
+                >
+                  <select formControlName="operator">
+                    <option *ngFor="let operator of operators"
+                            [value]="buildSelectOperatorValue(operator)"
+                    >{{buildSelectOperatorName(operator)}}</option>
+                  </select>
+                </popup>
+              </ng-template>
             </ng-container>
           </ng-container>
+          <!-- resolution button -->
+          <ng-container *ngIf="ticket.status.name === 'В работе'">
+            <button class="button available-width"
+                    (click)="closeTicket(true)"
+            >Вопрос решен
+            </button>
+            <button class="button available-width reject-button"
+                    (click)="closeTicket(false)"
+            >Вопрос не решен
+            </button>
+          </ng-container>
+          <!------------------------>
         </div>
       </div>
     </ng-container>

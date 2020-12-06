@@ -19,7 +19,7 @@ export class TicketsService {
   public getById(id: number): Observable<Ticket> {
     return this.restService.get(`${this.commonUrl}/get`, {
       params: {
-        id: `${id}` 
+        id: `${id}`
       }
     })
   }
@@ -36,8 +36,8 @@ export class TicketsService {
     return this.restService.get(`${this.commonUrl}/get/all`);
   }
 
-  public save(ticket: any): Observable<any> {
-    return this.restService.put(`${this.commonUrl}/save`, ticket);
+  public save(ticket: any, getUpdatedTicket: boolean = false): Observable<any> {
+    return this.restService.put(`${this.commonUrl}/${getUpdatedTicket ? 'saveAndGet' : 'save'}`, ticket);
   }
 
   public delete(ticket: Ticket): Observable<any> {
