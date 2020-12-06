@@ -34,9 +34,6 @@ export class MessageComponent implements OnInit, OnChanges {
     const currentUser = this.authenticationService.currentUserValue;
     const isCurrentUser = currentUser.username === this.message.user.username;
     this._type = isCurrentUser ? 'current' : 'other';
-    console.log(currentUser);
-    console.log(this.message);
-    console.log("\n")
   }
 
 }

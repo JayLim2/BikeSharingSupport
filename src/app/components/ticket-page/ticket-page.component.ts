@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Ticket} from "../../models/ticket.model";
 import {NgxSpinnerService} from "ngx-spinner";
 import {ActivatedRoute} from "@angular/router";
@@ -9,7 +9,6 @@ import {AuthenticationService} from "../../../services/authentication.service";
 import {Message} from "../../models/message.model";
 import {DateTimeService} from "../../../services/date-time.service";
 import {Constants} from "../../common/constants.utils";
-import {Role} from "../../models/role.model";
 import {MessagesService} from "../../../services/messages.service";
 
 @Component({
@@ -18,6 +17,14 @@ import {MessagesService} from "../../../services/messages.service";
   styleUrls: ['./ticket-page.component.less']
 })
 export class TicketPageComponent implements OnInit {
+
+  private chatNode: ElementRef;
+
+  @ViewChild('chat', {static: false}) set content(content: ElementRef) {
+    if (content) { // initially setter gets called with undefined
+      this.chatNode = content;
+    }
+  }
 
   public ticket: Ticket;
 
@@ -30,7 +37,7 @@ export class TicketPageComponent implements OnInit {
     private ns: NotificationService,
     private authenticationService: AuthenticationService,
     private dateTimeService: DateTimeService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
   ) {
     this._messageForm = new FormGroup({
       message: new FormControl(null, Validators.required)
@@ -54,8 +61,20 @@ export class TicketPageComponent implements OnInit {
         })
         .add(() => {
           this.overlayService.hide();
+          this.autoScroll();
         })
     }
+  }
+
+  autoScroll() {
+    setTimeout(() => {
+      if (this.chatNode) {
+        this.chatNode.nativeElement.scrollTo(
+          0,
+          this.chatNode.nativeElement.scrollHeight
+        );
+      }
+    }, 0);
   }
 
   onSendMessage() {
@@ -77,6 +96,8 @@ export class TicketPageComponent implements OnInit {
       this.messagesService.save(message)
         .subscribe(() => {
           this.ticket.messages.push(message);
+          this.autoScroll();
+          this.messageForm.reset();
         }, (error) => {
           console.error(error);
           this.ns.error("Ошибка отправки сообщения.");
