@@ -7,11 +7,12 @@
         {{field}}
       </th>
       <th></th>
-      <th></th>
     </tr>
     <tr *ngFor="let item of data[entityName]">
       <td *ngFor="let property of item | adminData">
-        {{item[property] | toString}}
+        <ng-container *ngIf="!adminUtils.isExcluded(property)">
+          {{item[property] | toString}}
+        </ng-container>
       </td>
       <td>
         <button class="btn btn-primary"
@@ -19,9 +20,8 @@
         >
           <fa-icon [icon]="'pencil-alt'"></fa-icon>
         </button>
-      </td>
-      <td>
         <button class="btn btn-danger"
+                style="margin-left: 10px"
                 (click)="onDelete(entityName, getId(item))"
         >
           <fa-icon [icon]="'trash-alt'"></fa-icon>

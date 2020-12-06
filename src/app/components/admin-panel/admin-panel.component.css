@@ -8,11 +8,13 @@
 }
 .admin-table th {
   border: 1px solid #bababa;
-  padding: 10px;
+  padding: 5px;
   background: #cccccc;
+  font-size: 10pt;
 }
 .admin-table td {
   border: 1px solid #bababa;
-  padding: 10px;
+  padding: 5px;
+  font-size: 10pt;
 }
 /*# sourceMappingURL=admin-panel.component.css.map */

@@ -14,8 +14,16 @@ export class UsersService {
     private restService: RestService
   ) { }
 
+  getAll(): Observable<User[]> {
+    return this.restService.get(`${this.commonUrl}/get/all`);
+  }
+
   getSupport(): Observable<User[]> {
     return this.restService.get(`${this.commonUrl}/get/all/support`);
+  }
+
+  deleteById(id: number): Observable<any> {
+    return this.restService.delete(`${this.commonUrl}/delete/${id}`);
   }
 
 }

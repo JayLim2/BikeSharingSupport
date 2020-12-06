@@ -1,1 +1,1 @@
-{"version":3,"sources":["admin-panel.component.less"],"names":[],"mappings":"AAAA;EACE,yBAAA;;AAGF;EAHE,yBAAA;EAMA,kBAAA;EACA,oBAAA;;AAJF,YAQE;EAXA,yBAAA;EAaE,aAAA;EACA,mBAAA;;AAXJ,YAcE;EAjBA,yBAAA;EAmBE,aAAA","file":"admin-panel.component.css"}
+{"version":3,"sources":["admin-panel.component.less"],"names":[],"mappings":"AAAA;EACE,yBAAA;;AAGF;EAHE,yBAAA;EAMA,kBAAA;EACA,oBAAA;;AAJF,YAQE;EAXA,yBAAA;EAaE,YAAA;EACA,mBAAA;EACA,eAAA;;AAZJ,YAeE;EAlBA,yBAAA;EAoBE,YAAA;EACA,eAAA","file":"admin-panel.component.css"}

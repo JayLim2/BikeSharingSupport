@@ -31,6 +31,7 @@ import {ToStringPipe} from './pipes/to-string.pipe';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
+import {AdminUtils} from "./common/admin.utils";
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {far} from '@fortawesome/free-regular-svg-icons';
   providers: [
     RestService,
     DatePipe,
+    AdminUtils,
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],

@@ -10,6 +10,7 @@ import {TimeUnitsService} from "../../../services/time-units.service";
 import {TicketStatusesService} from "../../../services/ticket-statuses.service";
 import {BikesService} from "../../../services/bikes.service";
 import {Observable} from "rxjs";
+import {AdminUtils} from "../../common/admin.utils";
 
 class Data {
   User: User[] = [];
@@ -50,37 +51,23 @@ export class AdminPanelComponent implements OnInit {
     private tariffsService: TariffsService,
     private timeUnitsService: TimeUnitsService,
     private ticketStatusesService: TicketStatusesService,
-    private bikesService: BikesService
+    private bikesService: BikesService,
+    public adminUtils: AdminUtils
   ) {
   }
 
   ngOnInit(): void {
     for (const entity of this.entities) {
       const entityName = this.getEntityName(entity);
-      let observable;
-      switch (entityName) {
-        case 'User':
-          observable = this.bikesService.getAll();
-          break;
-        case 'Tariff':
-          observable = this.tariffsService.getAll();
-          break;
-        case 'TicketStatus':
-          observable = this.ticketStatusesService.getAll();
-          break;
-        case 'TimeUnit':
-          observable = this.timeUnitsService.getAll();
-          break;
-        case 'Bike':
-          observable = this.bikesService.getAll();
-          break;
-      }
+      let service = this.getService(entityName);
+      let observable = service.getAll();
       if (observable) {
         (<Observable<any>>observable).subscribe((list) => {
-          this.data[entityName] = list;
           let first = list[0];
           if (first) {
-            this.fields[entityName] = Object.keys(first);
+            this.data[entityName] = list;
+            this.fields[entityName] = Object.keys(first)
+              .filter((field) => !this.adminUtils.isExcluded(field));
           }
         }, (error) => {
           console.error(`Error in entity '${entityName}': ${error}`);
@@ -95,6 +82,10 @@ export class AdminPanelComponent implements OnInit {
 
   onDelete(entityName: string, id: any): void {
     console.log("Delete: ", entityName, " id = ", id);
+    let service = this.getService(entityName);
+    if (service) {
+      let observable = service.deleteById(id);
+    }
   }
 
   getEntityName(entity): string {
@@ -102,7 +93,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   getId(item: any): any {
-    const probablyFields = ["id", "name"];
+    const probablyFields = ["id", "name", "username"];
     let id = null;
     for (const idCandidate of probablyFields) {
       id = item[idCandidate];
@@ -110,6 +101,28 @@ export class AdminPanelComponent implements OnInit {
         return id;
       }
     }
+  }
+
+  private getService(entityName: string): any {
+    let service = null;
+    switch (entityName) {
+      case 'User':
+        service = this.usersService;
+        break;
+      case 'Tariff':
+        service = this.tariffsService;
+        break;
+      case 'TicketStatus':
+        service = this.ticketStatusesService;
+        break;
+      case 'TimeUnit':
+        service = this.timeUnitsService;
+        break;
+      case 'Bike':
+        service = this.bikesService;
+        break;
+    }
+    return service;
   }
 
 }

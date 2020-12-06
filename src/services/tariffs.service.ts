@@ -18,4 +18,8 @@ export class TariffsService {
     return this.restService.get(`${this.commonUrl}/get/all`);
   }
 
+  deleteById(id: number): Observable<any> {
+    return this.restService.delete(`${this.commonUrl}/delete/${id}`);
+  }
+
 }
