@@ -98,7 +98,7 @@ export class CreateTicketFormComponent implements OnInit {
     }
 
     const value = this.form.value;
-    let ticket: Ticket = {
+    let ticket = {
       order: {
         id: +value.order
       },

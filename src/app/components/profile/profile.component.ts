@@ -7,7 +7,6 @@ import {TicketsService} from "../../../services/tickets.service";
 import {Order} from "../../models/order.model";
 import {OrdersService} from "../../../services/orders.service";
 import {Router} from "@angular/router";
-import {CostUtils} from "../../common/cost.utils";
 
 @Component({
   selector: 'app-profile',
@@ -57,9 +56,6 @@ export class ProfileComponent implements OnInit {
           this.overlayService.show();
           this.ordersService.getByUser(currentUser)
             .subscribe((orders) => {
-              for (const order of orders) {
-                order.cost = CostUtils.getCost(order);
-              }
               this._ordersList = orders;
             }, (error) => {
               console.error(error);

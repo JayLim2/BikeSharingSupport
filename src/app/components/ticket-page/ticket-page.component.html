@@ -2,7 +2,7 @@
 
 <div class="page">
   <div class="page__title">
-    Обращение по заказу № {{ticket?.order.id}}
+    Обращение по заказу {{ticket ? '№ ' + ticket.order.id : 'не найдено'}}
   </div>
   <div class="page__content">
     <ng-container *ngIf="ticket && ticket.messages.length > 0; else noTicket">
@@ -41,11 +41,32 @@
           ></status-field>
           <div style="padding-top:10px;">
             <data-field [name]="'Оператор'"
-                        [value]="ticket.order.user.firstName"
+                        [value]="ticket.assignee ? ticket.assignee.firstName : 'не назначен'"
             ></data-field>
           </div>
-          <button class="button available-width outline"
-          >Детали заказа</button>
+          <popup [popupTitle]="'Детали заказа'"
+                 [buttonTitle]="'Детали заказа'"
+                 [styles]="'available-width outline'"
+                 [type]="'info'"
+          >
+            <div class="data">
+              <data-field [name]="'Тариф'"
+                          [value]="ticket.order.tariff.name"
+              ></data-field>
+              <data-field [name]="'Транспорт'"
+                          [value]="ticket.order.bike.brand + ' ' + ticket.order.bike.model"
+              ></data-field>
+              <data-field [name]="'Начало поездки'"
+                          [value]="ticket.order.startTime"
+              ></data-field>
+              <data-field [name]="'Конец поездки'"
+                          [value]="ticket.order.endTime ? ticket.order.endTime : 'В пути'"
+              ></data-field>
+              <data-field [name]="'Стоимость'"
+                          [value]="ticket.order.cost + ' &#8381;'"
+              ></data-field>
+            </div>
+          </popup>
           <ng-container [ngSwitch]="ticket.status.name">
             <ng-container *ngSwitchCase="'Поиск оператора'">
               <button class="button available-width"

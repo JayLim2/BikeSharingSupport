@@ -54,7 +54,7 @@ export class TicketPageComponent implements OnInit {
     let ticketId = this.activatedRoute.snapshot.params['ticketId'];
     if (!Number.isNaN(ticketId)) {
       this.ticketsService.getById(ticketId)
-        .subscribe((ticket) => {
+        .subscribe((ticket: Ticket) => {
           this.ticket = ticket;
         }, (error) => {
           console.error(error);
