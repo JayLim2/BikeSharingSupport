@@ -61,9 +61,7 @@ export class CreateTicketFormComponent implements OnInit {
       description: new FormControl(null, Validators.required),
     })
 
-    this.ordersService.getByUser(
-      this.authenticationService.currentUserValue
-    ).subscribe((list: Order[] = []) => {
+    this.ordersService.getByUserIfTicketNotExists().subscribe((list: Order[] = []) => {
       if (list && list.length > 0) {
         this._orders = list;
         this.setSelectedOrder(this.selectedOrderId ? this.selectedOrderId : this._orders[0].id);

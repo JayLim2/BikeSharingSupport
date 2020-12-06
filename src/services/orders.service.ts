@@ -16,12 +16,12 @@ export class OrdersService {
   ) {
   }
 
-  public getByUser(user: User): Observable<Order[]> {
-    return this.restService.get(`${this.commonUrl}/get/user`, {
-      params: {
-        userId: user.username
-      }
-    });
+  public getByUser(): Observable<Order[]> {
+    return this.restService.get(`${this.commonUrl}/get/user`);
+  }
+
+  public getByUserIfTicketNotExists(): Observable<Order[]> {
+    return this.restService.get(`${this.commonUrl}/get/user/noTickets`);
   }
 
 }

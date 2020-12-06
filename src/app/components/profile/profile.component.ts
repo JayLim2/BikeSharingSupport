@@ -7,13 +7,14 @@ import {TicketsService} from "../../../services/tickets.service";
 import {Order} from "../../models/order.model";
 import {OrdersService} from "../../../services/orders.service";
 import {Router} from "@angular/router";
+import {GrantsUtils} from "../../common/grants.utils";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.less']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent extends GrantsUtils implements OnInit {
 
   /* TODO Сделать не ручные флаги! */
 
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit {
     private ordersService: OrdersService,
     private router: Router
   ) {
+    super(authenticationService);
   }
 
   get ticketsList(): Ticket[] {
@@ -54,7 +56,7 @@ export class ProfileComponent implements OnInit {
           this.currentUser = currentUser;
 
           this.overlayService.show();
-          this.ordersService.getByUser(currentUser)
+          this.ordersService.getByUser()
             .subscribe((orders) => {
               this._ordersList = orders;
             }, (error) => {
@@ -65,7 +67,7 @@ export class ProfileComponent implements OnInit {
             });
 
           this.overlayService.show();
-          this.ticketsService.getByUser(currentUser)
+          this.ticketsService.getByUser()
             .subscribe((tickets) => {
               this._ticketsList = tickets;
             }, (error) => {
@@ -86,6 +88,7 @@ export class ProfileComponent implements OnInit {
       case 'main':
       case 'orders':
       case 'tickets':
+      case 'handbooks':
         this.selectedTab = tab;
         localStorage.setItem("selectedTab", this.selectedTab);
     }
@@ -115,6 +118,28 @@ export class ProfileComponent implements OnInit {
         order: orderId
       }
     });
+  }
+
+  isCurrentUserTicket(ticket: Ticket) {
+    return ticket.order.user.username === this.authenticationService.currentUserValue.username;
+  }
+
+  ticketAlreadyExists(order: Order): boolean {
+    for (const ticket of this.ticketsList) {
+      if (ticket.order.id === order.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getTicketIdByOrder(order: Order): number {
+    for (const ticket of this.ticketsList) {
+      if (ticket.order.id === order.id) {
+        return ticket.id;
+      }
+    }
+    return -1;
   }
 
 }

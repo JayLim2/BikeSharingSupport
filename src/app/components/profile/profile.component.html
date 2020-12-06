@@ -9,15 +9,28 @@
       <div class="tab"
            [ngClass]="selectedTab === 'main' ? 'selected' : ''"
            (click)="onTabClick('main')"
-      >Основные данные</div>
-      <div class="tab"
+      >Основные данные
+      </div>
+      <!-- for clients and admins -->
+      <div *ngIf="isAdminOrClient()"
+           class="tab"
            [ngClass]="selectedTab === 'orders' ? 'selected' : ''"
            (click)="onTabClick('orders')"
-      >Мои заказы</div>
+      >Заказы
+      </div>
+      <!-- -->
       <div class="tab"
            [ngClass]="selectedTab === 'tickets' ? 'selected' : ''"
            (click)="onTabClick('tickets')"
-      >Мои обращения</div>
+      >Обращения
+      </div>
+      <!-- only for admins -->
+      <div *ngIf="isAdmin()"
+           class="tab"
+           [ngClass]="selectedTab === 'handbooks' ? 'selected' : ''"
+           (click)="onTabClick('handbooks')"
+      >Справочники
+      </div>
     </div>
 
     <ng-container [ngSwitch]="selectedTab">
@@ -29,6 +42,9 @@
       </ng-container>
       <ng-container *ngSwitchCase="'tickets'">
         <ng-content *ngTemplateOutlet="tickets"></ng-content>
+      </ng-container>
+      <ng-container *ngSwitchCase="'handbooks'">
+        <ng-content *ngTemplateOutlet="handbooks"></ng-content>
       </ng-container>
     </ng-container>
   </div>
@@ -93,9 +109,16 @@
         </div>
 
         <div class="controls">
-          <button class="button available-width"
+          <button *ngIf="!ticketAlreadyExists(order)"
+                  class="button available-width"
                   (click)="onNeedSupport(order.id)"
-          >Нужна помощь</button>
+          >Нужна помощь
+          </button>
+          <button *ngIf="ticketAlreadyExists(order)"
+                  class="button available-width"
+                  [routerLink]="'/tickets/view/' + getTicketIdByOrder(order)"
+          >Чат
+          </button>
         </div>
       </div>
     </div>
@@ -110,10 +133,14 @@
         <button class="button medium"
                 style="width: 250px; margin-left: 20px"
                 routerLink="/tickets/create"
-        >Обратиться в службу поддержки</button>
+        >Обратиться в службу поддержки
+        </button>
       </ng-container>
       <ng-container *ngSwitchCase="'SUPPORT'">
         Здесь вы можете посмотреть обращения, которые назначены Вам.
+      </ng-container>
+      <ng-container *ngSwitchCase="'ADMIN'">
+        Здесь вы можете управлять всеми обращениями в системе.
       </ng-container>
     </ng-container>
   </div>
@@ -139,8 +166,10 @@
         <div class="controls">
           <button class="button available-width"
                   [routerLink]="'/tickets/view/' + ticket.id"
-          >Чат</button>
-          <popup [popupTitle]="'Отменить обращение?'"
+          >Чат
+          </button>
+          <popup *ngIf="isCurrentUserTicket(ticket) || isAdmin()"
+                 [popupTitle]="'Отменить обращение?'"
                  [buttonTitle]="'Отменить обращение'"
                  [styles]="'reject-button available-width'"
                  [type]="'confirm'"
@@ -153,4 +182,8 @@
       </div>
     </div>
   </div>
+</ng-template>
+
+<ng-template #handbooks>
+  Скоро.
 </ng-template>

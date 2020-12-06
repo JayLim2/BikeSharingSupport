@@ -5,9 +5,9 @@
     Обратиться в службу поддержки
   </div>
   <div class="page__content">
-    Постарайтесь как можно подробнее описать проблему - мы Вам поможем в течение 15 минут.
-
     <ng-container *ngIf="orders && orders.length > 0; else noOrders">
+      Постарайтесь как можно подробнее описать проблему - мы Вам поможем в течение 15 минут.
+
       <form style="display: flex; flex-direction: column"
             [formGroup]="form"
             (ngSubmit)="onCreateTicket()"
@@ -59,16 +59,7 @@
 
     <ng-template #noOrders>
       <div style="padding-top: 20px;">
-        К сожалению, Вы еще не пользовались нашим сервисом.
-        <br/>
-        <popup [buttonTitle]="'Исправить'"
-               [type]="'info'"
-               [popupTitle]="'Информация'"
-               [styles]="'long-button'"
-        >
-          Увы, бюджета хватило только на сайт службы поддержки.
-        </popup>
-
+        Вы еще не пользовались сервисом или на все существующие заказы уже созданы обращения.
       </div>
     </ng-template>
 

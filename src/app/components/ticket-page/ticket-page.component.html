@@ -76,7 +76,7 @@
           </popup>
           <!-- assign button -->
           <ng-container *ngIf="ticket.status.name !== 'Вопрос решен'">
-            <ng-container *ngIf="authenticationService.currentUserValue.role === 'SUPPORT'">
+            <ng-container *ngIf="isAdminOrSupport()">
               <button
                 *ngIf="!ticket.assignee || authenticationService.currentUserValue.username !== ticket.assignee.username; else assignToOther"
                 class="button available-width"

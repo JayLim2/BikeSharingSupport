@@ -12,13 +12,14 @@ import {Constants} from "../../common/constants.utils";
 import {MessagesService} from "../../../services/messages.service";
 import {User} from "../../models/user.model";
 import {UsersService} from "../../../services/users.service";
+import {GrantsUtils} from "../../common/grants.utils";
 
 @Component({
   selector: 'app-ticket-page',
   templateUrl: './ticket-page.component.html',
   styleUrls: ['./ticket-page.component.less']
 })
-export class TicketPageComponent implements OnInit {
+export class TicketPageComponent extends GrantsUtils implements OnInit {
 
   private _messageForm: FormGroup;
   private _reassignForm: FormGroup;
@@ -38,6 +39,7 @@ export class TicketPageComponent implements OnInit {
     private messagesService: MessagesService,
     private usersService: UsersService
   ) {
+    super(authenticationService);
     this._messageForm = new FormGroup({
       message: new FormControl(null, Validators.required)
     });

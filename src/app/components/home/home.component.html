@@ -2,7 +2,9 @@
   Добро пожаловать!
 </div>
 
-<div style="margin:50px;font-size: 14pt; color: gray; text-align: center">
+<div *ngIf="isClient()"
+     style="margin:50px;font-size: 14pt; color: gray; text-align: center"
+>
   <ng-container *ngIf="userMessage; else unauthorizedUser">
     {{userMessage}}, напишите нам, если у Вас возникли сложности при использовании
     нашего сервиса.
@@ -14,7 +16,12 @@
 </div>
 
 <div style="text-align: center">
-  <button class="button big-orange-button"
+  <button *ngIf="isClient()"
+    class="button big-orange-button"
           routerLink="tickets/create"
   >Написать нам</button>
+  <button *ngIf="isAdminOrSupport()"
+          class="button big-orange-button"
+          routerLink="profile"
+  >Личный кабинет</button>
 </div>
