@@ -5,7 +5,7 @@ export class AdminUtils {
   readonly excludedProperties: string[] = [
     "authorities", "enabled", "accountNonLocked",
     "accountNonExpired", "accountNonExpired",
-    "credentialsNonExpired"
+    "credentialsNonExpired", "id"
   ];
 
   readonly hiddenProperties: string[] = [
