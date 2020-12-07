@@ -18,4 +18,12 @@ export class TicketStatusesService {
     return this.restService.get(`${this.commonUrl}/get/all`);
   }
 
+  save(status: TicketStatus): Observable<any> {
+    return this.restService.put(`${this.commonUrl}/save`, status);
+  }
+
+  deleteById(id: number): Observable<any> {
+    return this.restService.delete(`${this.commonUrl}/delete/${id}`);
+  }
+
 }

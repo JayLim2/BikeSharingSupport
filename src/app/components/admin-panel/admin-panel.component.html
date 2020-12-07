@@ -30,17 +30,19 @@
       <tr *ngFor="let item of data[entityName]">
         <td *ngFor="let property of item | adminData">
           <ng-container *ngIf="!adminUtils.isExcluded(property)">
-            {{item[property] | toString}}
+            {{(!adminUtils.isHidden(property) ? item[property] : '[hidden]') | toString}}
           </ng-container>
         </td>
         <td>
           <button class="btn btn-primary"
                   (click)="onEdit(entityName, getId(item))"
+                  type="button"
           >
             <fa-icon [icon]="'pencil-alt'"></fa-icon>
           </button>
           <button class="btn btn-danger"
                   style="margin-left: 10px"
+                  type="button"
                   (click)="onDelete(entityName, getId(item))"
           >
             <fa-icon [icon]="'trash-alt'"></fa-icon>

@@ -97,7 +97,57 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onAdd(entityName: string) {
-    console.log("Add: ", entityName);
+    const formValue = this.forms[entityName].value;
+    let observable: Observable<any>;
+    switch (entityName) {
+      case 'User':
+        let user: User = new User();
+        user.username = formValue.username;
+        user.role = formValue.role;
+        user.firstName = formValue.firstName;
+        user.middleName = formValue.middleName;
+        user.lastName = formValue.lastName;
+        user.password = formValue.password;
+        user.passportSeries = formValue.passportSeries;
+        user.passportNumber = formValue.passportNumber;
+        observable = this.usersService.save(user);
+        break;
+      case 'Tariff':
+        let tariff: Tariff = new Tariff();
+        tariff.name = formValue.name;
+        tariff.pricePerTimeUnit = formValue.pricePerTimeUnit;
+        tariff.timeUnit = {
+          name: formValue.timeUnit
+        };
+        observable = this.tariffsService.save(tariff);
+        break;
+      case 'TicketStatus':
+        let ticketStatus: TicketStatus = new TicketStatus();
+        ticketStatus.name = formValue.name;
+        ticketStatus.backgroundHexColor = formValue.backgroundHexColor ?
+          formValue.backgroundHexColor : "black";
+        observable = this.ticketStatusesService.save(ticketStatus);
+        break;
+      case 'TimeUnit':
+        let timeUnit: TimeUnit = new TimeUnit();
+        timeUnit.name = formValue.name;
+        observable = this.timeUnitsService.save(timeUnit);
+        break;
+      case 'Bike':
+        let bike: Bike = new Bike();
+        bike.brand = formValue.brand;
+        bike.model = formValue.model;
+        observable = this.bikesService.save(bike);
+        break;
+    }
+    observable.subscribe(() => {
+      this.ns.info(`Сущность '${entityName}' успешно добавлена.`);
+      this.forms[entityName].reset();
+      this.ngOnInit();
+    }, (error) => {
+      console.error(error);
+      this.ns.error(`Сущность '${entityName}' не может быть добавлена.`);
+    });
   }
 
   onEdit(entityName: string, id: any): void {
@@ -105,12 +155,12 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onDelete(entityName: string, id: any): void {
-    console.log("Delete: ", entityName, " id = ", id);
     let service = this.getService(entityName);
     if (service) {
       service.deleteById(id)
         .subscribe(() => {
           this.ns.info(`Сущность '${entityName} с ID = '${id}' успешно удалена.`)
+          this.ngOnInit();
         }, (error) => {
           this.ns.error(`Сущность '${entityName} с ID = '${id}' не может быть удалена.`)
           console.error(entityName, " => ", error);

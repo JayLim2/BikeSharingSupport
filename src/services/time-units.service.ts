@@ -18,6 +18,10 @@ export class TimeUnitsService {
     return this.restService.get(`${this.commonUrl}/get/all`);
   }
 
+  save(timeUnit: TimeUnit): Observable<any> {
+    return this.restService.put(`${this.commonUrl}/save`, timeUnit);
+  }
+
   deleteById(id: number): Observable<any> {
     return this.restService.delete(`${this.commonUrl}/delete/${id}`);
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RestService} from "./rest.service";
 import {Observable} from "rxjs";
 import {Bike} from "../app/models/bike.model";
@@ -16,6 +16,10 @@ export class BikesService {
 
   getAll(): Observable<Bike[]> {
     return this.restService.get(`${this.commonUrl}/get/all`);
+  }
+
+  save(bike: Bike): Observable<any> {
+    return this.restService.put(`${this.commonUrl}/save`, bike);
   }
 
   deleteById(id: number): Observable<any> {
