@@ -6,7 +6,7 @@
   width: 100px !important;
   height: 35px !important;
 }
-input {
+.admin-input {
   padding: 4px !important;
   border: 1px solid gray !important;
   font-size: 10pt !important;
@@ -14,7 +14,20 @@ input {
   width: 100px !important;
   height: 35px !important;
 }
-input:hover {
+.admin-input_disabled {
+  background: #f0f0f0;
+}
+.admin-input_disabled:hover {
+  padding: 4px !important;
+  border: 1px solid gray !important;
+  font-size: 10pt !important;
+  border-radius: 0 !important;
+  width: 100px !important;
+  height: 35px !important;
+  cursor: auto !important;
+  background: #f0f0f0 !important;
+}
+.admin-input:hover {
   padding: 4px !important;
   border: 1px solid gray !important;
   font-size: 10pt !important;

@@ -7,8 +7,18 @@
   height: 35px !important;
 }
 
-input {
+.admin-input {
   .input-override-styles;
+
+  &_disabled {
+    background: rgb(240, 240, 240);
+
+    &:hover {
+      .input-override-styles;
+      cursor: auto !important;
+      background: rgb(240, 240, 240) !important;
+    }
+  }
 
   &:hover {
     .input-override-styles;

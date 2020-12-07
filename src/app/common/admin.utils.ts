@@ -5,7 +5,7 @@ export class AdminUtils {
   readonly excludedProperties: string[] = [
     "authorities", "enabled", "accountNonLocked",
     "accountNonExpired", "accountNonExpired",
-    "credentialsNonExpired", "id"
+    "credentialsNonExpired", "phone"
   ];
 
   readonly hiddenProperties: string[] = [
@@ -20,7 +20,11 @@ export class AdminUtils {
     return this.hiddenProperties.includes(property);
   }
 
-  replaceIfHidden(property: string): string {
-    return this.isHidden(property) ? "[hidden]" : "";
+  isDisabledField(field: string): boolean {
+    return ["id"].includes(field);
+  }
+
+  tryDisableColumn(field: string): string {
+    return ["id"].includes(field) ? 'display: none;' : '';
   }
 }

@@ -1,3 +1,17 @@
+<div class="message warning" style="margin-bottom: 20px;">
+  <b>Обратите внимание:</b>
+  <ol style="margin: 0">
+    <li>
+      Редактирование ключевых полей не допускается.
+      Будет создан новый экземпляр сущности.
+    </li>
+    <li>
+      При редактировании пользователя пароль нужно ввести повторно.
+      Это связано с необратимым шифрованием паролей.
+    </li>
+  </ol>
+</div>
+
 <div *ngFor="let entityName of data | adminData">
   <b>{{entityName}}</b>
 
@@ -7,16 +21,23 @@
   >
     <table class="admin-table">
       <tr>
-        <th *ngFor="let field of fields[entityName]">
+        <th *ngFor="let field of fields[entityName]"
+            [style]="adminUtils.tryDisableColumn(field)"
+        >
           {{field}}
         </th>
         <th></th>
       </tr>
       <tr>
-        <td *ngFor="let field of fields[entityName]">
-          <input type="text"
+        <td *ngFor="let field of fields[entityName]"
+            [style]="adminUtils.tryDisableColumn(field)"
+        >
+          <input class="admin-input"
+                 [ngClass]="adminUtils.isDisabledField(field) ? 'admin-input_disabled' : ''"
+                 [type]="adminUtils.isDisabledField(field) ? 'hidden' : 'text'"
                  [placeholder]="field"
                  [formControlName]="field"
+                 [readOnly]="adminUtils.isDisabledField(field)"
           />
         </td>
         <td>
@@ -28,7 +49,9 @@
         </td>
       </tr>
       <tr *ngFor="let item of data[entityName]">
-        <td *ngFor="let property of item | adminData">
+        <td *ngFor="let property of item | adminData"
+            [style]="adminUtils.tryDisableColumn(property)"
+        >
           <ng-container *ngIf="!adminUtils.isExcluded(property)">
             {{(!adminUtils.isHidden(property) ? item[property] : '[hidden]') | toString}}
           </ng-container>

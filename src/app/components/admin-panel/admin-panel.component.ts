@@ -152,6 +152,26 @@ export class AdminPanelComponent implements OnInit {
 
   onEdit(entityName: string, id: any): void {
     console.log("Edit: ", entityName, " id = ", id);
+    const form: FormGroup = this.forms[entityName];
+    const fields: string[] = this.fields[entityName];
+    const entities = this.data[entityName];
+    let entity = null;
+    for (const item of entities) {
+      let itemId = this.getId(item);
+      if (itemId && itemId === id) {
+        entity = item;
+      }
+    }
+    for (const field of fields) {
+      if (field !== 'password') {
+        let value = entity[field];
+        if (typeof value === 'object') {
+          value = value.name;
+        }
+        form.get(field).setValue(value);
+      }
+    }
+    this.ns.info("Форма редактирования заполнена.", 3);
   }
 
   onDelete(entityName: string, id: any): void {
