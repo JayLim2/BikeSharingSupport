@@ -16,8 +16,6 @@ import {GrantsUtils} from "../../common/grants.utils";
 })
 export class ProfileComponent extends GrantsUtils implements OnInit {
 
-  /* TODO Сделать не ручные флаги! */
-
   public currentUser: any;
   public selectedTab: string = 'main';
 
@@ -56,15 +54,17 @@ export class ProfileComponent extends GrantsUtils implements OnInit {
           this.currentUser = currentUser;
 
           this.overlayService.show();
-          this.ordersService.getByUser()
-            .subscribe((orders) => {
-              this._ordersList = orders;
-            }, (error) => {
-              console.error(error);
-            })
-            .add(() => {
-              this.overlayService.hide();
-            });
+          if (this.isAdminOrClient()) {
+            this.ordersService.getByUser()
+              .subscribe((orders) => {
+                this._ordersList = orders;
+              }, (error) => {
+                console.error(error);
+              })
+              .add(() => {
+                this.overlayService.hide();
+              });
+          }
 
           this.overlayService.show();
           this.ticketsService.getByUser()
