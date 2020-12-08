@@ -137,7 +137,7 @@
         </button>
       </ng-container>
       <ng-container *ngSwitchCase="'SUPPORT'">
-        Здесь вы можете посмотреть обращения, которые назначены Вам.
+        Здесь вы можете посмотреть обращения, которые назначены Вам или не назначены никому.
       </ng-container>
       <ng-container *ngSwitchCase="'ADMIN'">
         Здесь вы можете управлять всеми обращениями в системе.
@@ -168,7 +168,7 @@
                   [routerLink]="'/tickets/view/' + ticket.id"
           >Чат
           </button>
-          <popup *ngIf="isCurrentUserTicket(ticket) || isAdmin()"
+          <popup *ngIf="ticket.status.name !== 'Вопрос решен' && isCurrentUserTicket(ticket) || isAdmin()"
                  [popupTitle]="'Отменить обращение?'"
                  [buttonTitle]="'Отменить обращение'"
                  [styles]="'reject-button available-width'"

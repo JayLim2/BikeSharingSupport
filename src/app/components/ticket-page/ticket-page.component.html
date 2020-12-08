@@ -74,9 +74,10 @@
               ></data-field>
             </div>
           </popup>
-          <!-- assign button -->
-          <ng-container *ngIf="ticket.status.name !== 'Вопрос решен'">
-            <ng-container *ngIf="isAdminOrSupport()">
+
+          <ng-container *ngIf="isAdminOrSupport()">
+            <!-- assign button -->
+            <ng-container *ngIf="ticket.status.name !== 'Вопрос решен'">
               <button
                 *ngIf="!ticket.assignee || authenticationService.currentUserValue.username !== ticket.assignee.username; else assignToOther"
                 class="button available-width"
@@ -99,19 +100,27 @@
                 </popup>
               </ng-template>
             </ng-container>
+            <!------------------------>
+
+            <!-- resolution button -->
+            <ng-container *ngIf="ticket.status.name === 'В работе'">
+              <button class="button available-width"
+                      (click)="closeTicket(true)"
+              >Вопрос решен
+              </button>
+              <button class="button available-width reject-button"
+                      (click)="closeTicket(false)"
+              >Вопрос не решен
+              </button>
+            </ng-container>
+            <ng-container *ngIf="ticket.status.name === 'Вопрос решен'">
+              <button class="button available-width reject-button"
+                      (click)="closeTicket(false)"
+              >Вопрос не решен
+              </button>
+            </ng-container>
+            <!------------------------>
           </ng-container>
-          <!-- resolution button -->
-          <ng-container *ngIf="ticket.status.name === 'В работе'">
-            <button class="button available-width"
-                    (click)="closeTicket(true)"
-            >Вопрос решен
-            </button>
-            <button class="button available-width reject-button"
-                    (click)="closeTicket(false)"
-            >Вопрос не решен
-            </button>
-          </ng-container>
-          <!------------------------>
         </div>
       </div>
     </ng-container>
